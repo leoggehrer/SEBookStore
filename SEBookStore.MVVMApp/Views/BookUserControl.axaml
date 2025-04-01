@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:SEBookStore.MVVMApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="460" d:DesignHeight="320"
+             x:Class="SEBookStore.MVVMApp.Views.BookUserControl"
+	 		 x:DataType="vm:BookViewModel">
+
+	<UserControl.DataContext>
+		<vm:BookViewModel />
+	</UserControl.DataContext>
+
+	<Grid Margin="20 10 20 10">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+		</Grid.RowDefinitions>
+
+		<Label Grid.Row="0" Grid.Column="0" Content="ISBN:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ISBNNumber}" Margin="0 10 10 0"/>
+
+		<Label Grid.Row="1" Grid.Column="0" Content="Autor:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Author}" Margin="0 10 10 0"/>
+
+		<Label Grid.Row="2" Grid.Column="0" Content="Titel:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Title}" Margin="0 10 10 0"/>
+
+		<Label Grid.Row="3" Grid.Column="0" Content="Beschreibung:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Description}" Margin="0 10 10 0"/>
+
+		<Label Grid.Row="4" Grid.Column="0" Content="Erscheinung:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding YearOfRelease}" Margin="0 10 10 0"/>
+
+		<Label Grid.Row="5" Grid.Column="0" Content="Preis:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Price}" Margin="0 10 10 0"/>
+
+		<StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+			<Button Content="Abbrechen" Command="{Binding CancelCommand}" Width="120" HorizontalContentAlignment="Center" Margin="0 10 10 0"/>
+			<Button Content="Speichern" Command="{Binding SaveCommand}" Width="120" HorizontalContentAlignment="Center" Margin="0 10 10 0"/>
+		</StackPanel>
+	</Grid>
+
+</UserControl>
