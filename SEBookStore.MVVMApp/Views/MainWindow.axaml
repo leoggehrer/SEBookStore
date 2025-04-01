@@ -18,7 +18,7 @@
 
 	<TabControl Margin="5">
 		<TabItem Header="Item1">
-			<TextBlock Margin="5">This is tab 1 for item1</TextBlock>
+			<views:BooksUserControl />
 		</TabItem>
 		<TabItem Header="Item2">
 			<TextBlock Margin="5">This is tab 2 for item2</TextBlock>

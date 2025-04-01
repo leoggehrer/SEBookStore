@@ -12,9 +12,6 @@
 	<Window.DataContext>
 		<vm:BookViewModel></vm:BookViewModel>
 	</Window.DataContext>
-
-	<BookUserControl>
-		
-	</BookUserControl>
+	<views:BookUserControl />
 	
 </Window>
