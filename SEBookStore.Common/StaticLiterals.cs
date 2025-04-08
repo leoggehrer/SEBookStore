@@ -131,7 +131,7 @@ namespace SEBookStore.Common
         /// Gets the label for the base code.
         /// </summary>
         /// <value>A string representing the label for base code.</value>
-        public static string BaseCodeLabel => "@CodeCopy";
+        public static string BaseCodeLabel => "@BaseCode";
         /// <summary>
         /// Gets a label for code copy.
         /// </summary>
@@ -163,7 +163,7 @@ namespace SEBookStore.Common
         /// <value>
         /// The extensions of source files in the format "*.css|*.cs|*.ts|*.cshtml|*.razor|*.razor.cs|*.template".
         /// </value>
-        public static string SourceFileExtensions => "*.css|*.cs|*.ts|*.cshtml|*.razor|*.razor.cs|*.template|*.puml";
+        public static string SourceFileExtensions => "*.css|*.cs|*.ts|*.cshtml|*.razor|*.razor.cs|*.template|*.puml|*.axaml";
         
         /// <summary>
         /// Gets the maximum page size.

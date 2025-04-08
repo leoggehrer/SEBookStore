@@ -44,7 +44,7 @@ namespace SEBookStore.MVVMApp.ViewModels
         protected virtual async void Save()
         {
             bool canClose = false;
-            using var httpClient = new HttpClient { BaseAddress = new Uri(API_BASE_URL) };
+            using var httpClient = CreateHttpClient();
 
             try
             {

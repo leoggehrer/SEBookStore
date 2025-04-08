@@ -1,4 +1,6 @@
 ﻿//@CodeCopy
+using System.Reflection;
+
 namespace SEBookStore.ConApp
 {
     internal partial class Program

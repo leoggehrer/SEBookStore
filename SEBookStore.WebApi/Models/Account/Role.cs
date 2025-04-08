@@ -1,5 +1,4 @@
 ﻿//@CodeCopy
-//MdStart
 #if ACCOUNT_ON
 namespace SEBookStore.WebApi.Models.Account
 {
@@ -32,4 +31,3 @@ namespace SEBookStore.WebApi.Models.Account
     }
 }
 #endif
-//MdEnd

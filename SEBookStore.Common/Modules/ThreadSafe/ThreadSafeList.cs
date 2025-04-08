@@ -1,5 +1,4 @@
 ﻿//@CodeCopy
-//MdStart
 namespace SEBookStore.Common.Modules.ThreadSafe
 {
     using System.Collections;
@@ -214,4 +213,3 @@ namespace SEBookStore.Common.Modules.ThreadSafe
         }
     }
 }
-//MdEnd

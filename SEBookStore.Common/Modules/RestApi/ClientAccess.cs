@@ -13,21 +13,21 @@ namespace SEBookStore.Common.Modules.RestApi
     /// </remarks>
     /// <param name="baseAddress">The base address for the client.</param>
     /// <param name="sessionToken">The session token for the client.</param>
-    public partial class ClientAccess(string baseAddress, string sessionToken)
+    public static partial class ClientAccess
     {
         #region static properties
         /// <summary>
         /// Returns the media type for JSON formatting.
         /// </summary>
         /// <returns>The media type string.</returns>
-        protected static string MediaType => "application/json";
+        public static string MediaType => "application/json";
         /// <summary>
         /// Gets the options for deserializing JSON data into objects.
         /// </summary>
         /// <value>
         /// The options for deserializing JSON data into objects.
         /// </value>
-        protected static JsonSerializerOptions DeserializerOptions => new() { PropertyNameCaseInsensitive = true };
+        public static JsonSerializerOptions DeserializerOptions => new() { PropertyNameCaseInsensitive = true };
         #endregion static properties
         
         #region static methods
@@ -36,7 +36,7 @@ namespace SEBookStore.Common.Modules.RestApi
         /// </summary>
         /// <param name="baseAddress">The base address of the server.</param>
         /// <returns>A new instance of HttpClient.</returns>
-        protected static HttpClient CreateClient(string baseAddress)
+        public static HttpClient CreateClient(string baseAddress)
         {
             HttpClient client = new();
             
@@ -62,7 +62,7 @@ namespace SEBookStore.Common.Modules.RestApi
         /// <param name="baseAddress">The base address of the HTTP client.</param>
         /// <param name="sessionToken">The session token to be used for authorization.</param>
         /// <returns>A new instance of HttpClient.</returns>
-        protected static HttpClient CreateClient(string baseAddress, string sessionToken)
+        public static HttpClient CreateClient(string baseAddress, string sessionToken)
         {
             HttpClient client = CreateClient(baseAddress);
             
@@ -71,48 +71,5 @@ namespace SEBookStore.Common.Modules.RestApi
             return client;
         }
         #endregion static methods
-
-        #region properties
-        /// <summary>
-        /// Gets or sets the base address.
-        /// </summary>
-        public string BaseAddress { get; init; } = baseAddress;
-        /// <summary>
-        /// Gets or sets the session token for the current session.
-        /// </summary>
-        public string SessionToken { get; init; } = sessionToken;
-        #endregion properties
-
-        #region constructors
-        /// <summary>
-        /// Initializes a new instance of the ClientAccess class with the specified base address and an empty token.
-        /// </summary>
-        /// <param name="baseAddress">The base address of the client.</param>
-        public ClientAccess(string baseAddress)
-        : this(baseAddress, string.Empty)
-        {
-        }
-        #endregion constructors
-
-        #region methods
-        /// <summary>
-        /// Creates an instance of <see cref="HttpClient"/> with the specified <see cref="BaseAddress"/> and <see cref="SessionToken"/> if available.
-        /// </summary>
-        /// <returns>An instance of <see cref="HttpClient"/>.</returns>
-        protected HttpClient CreateClient()
-        {
-            HttpClient result;
-            
-            if (SessionToken.HasContent())
-            {
-                result = CreateClient(BaseAddress, SessionToken);
-            }
-            else
-            {
-                result = CreateClient(BaseAddress);
-            }
-            return result;
-        }
-        #endregion methods
     }
 }

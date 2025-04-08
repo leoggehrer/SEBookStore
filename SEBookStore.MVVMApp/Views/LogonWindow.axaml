@@ -1,0 +1,16 @@
+﻿<!--@CodeCopy-->
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:SEBookStore.MVVMApp.ViewModels"
+		xmlns:views="using:SEBookStore.MVVMApp.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		Width="450"
+		Height="250"
+        x:Class="SEBookStore.MVVMApp.Views.LogonWindow"
+		WindowStartupLocation="CenterOwner"
+        Title="Anmeldung">
+
+	<views:LogonUserControl x:Name="LogonUserControl" />
+</Window>

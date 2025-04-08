@@ -23,7 +23,7 @@ namespace TemplateTools.Logic.Preprocessor
         {
             foreach (var define in defineItems.Select(d => d.ToUpper()))
             {
-                SetPreprocessorDefineCommentsInFiles(path, define);
+                SetPreprocessorDefineCommentsInFiles(path, define, "*.cshtml", "*.razor");
                 SetPreprocessorDefineBlockCommentsInFiles(path, define, "*.json");
             }
         }

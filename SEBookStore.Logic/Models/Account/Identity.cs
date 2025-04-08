@@ -1,5 +1,4 @@
 ﻿//@CodeCopy
-//MdStart
 #if ACCOUNT_ON
 namespace SEBookStore.Logic.Models.Account
 {
@@ -84,4 +83,3 @@ namespace SEBookStore.Logic.Models.Account
     }
 }
 #endif
-//MdEnd

@@ -13,3 +13,4 @@ namespace SEBookStore.MVVMApp.Views.Templates
         }
     }
 }
+

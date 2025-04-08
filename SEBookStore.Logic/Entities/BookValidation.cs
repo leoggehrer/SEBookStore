@@ -39,7 +39,7 @@ namespace SEBookStore.Logic.Entities
             var sum = 0;
             var rest = 0;
 
-            for (int i = 0; i < number?.Length - 1 && result; i++)
+            for (int i = 0; result && i < number?.Length - 1; i++)
             {
                 sum += (number == null ? 0 : number[i] - '0') * (i + 1);
             }

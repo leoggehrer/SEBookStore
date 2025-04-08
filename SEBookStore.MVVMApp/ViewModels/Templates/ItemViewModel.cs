@@ -1,6 +1,6 @@
 ﻿//@CodeCopy
 
-//@CodeCopy
+//@BaseCode
 using SEBookStore.MVVMApp.Models.Templates;
 
 namespace SEBookStore.MVVMApp.ViewModels.Templates

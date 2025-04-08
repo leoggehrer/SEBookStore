@@ -1,5 +1,4 @@
-﻿//@CodeCopy
-namespace SEBookStore.Logic.Entities
+﻿namespace SEBookStore.Logic.Entities
 {
     /// <summary>
     /// Represents a book entity.

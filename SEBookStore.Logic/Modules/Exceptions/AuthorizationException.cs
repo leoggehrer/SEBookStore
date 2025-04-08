@@ -1,5 +1,4 @@
 ﻿//@CodeCopy
-
 #if ACCOUNT_ON
 namespace SEBookStore.Logic.Modules.Exceptions
 {
