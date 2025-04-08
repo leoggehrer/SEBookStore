@@ -5,6 +5,7 @@
     /// </summary>
     [Table("Books")]
     [Index(nameof(ISBNNumber), IsUnique = true)]
+    [Index(nameof(Author), nameof(Title), IsUnique = true)]
     public partial class Book : EntityObject
     {
         private string iSBNNumber = string.Empty;
