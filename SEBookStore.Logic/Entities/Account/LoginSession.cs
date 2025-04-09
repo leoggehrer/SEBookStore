@@ -1,5 +1,4 @@
 ﻿//@CodeCopy
-
 #if ACCOUNT_ON
 namespace SEBookStore.Logic.Entities.Account
 {
@@ -12,7 +11,7 @@ namespace SEBookStore.Logic.Entities.Account
 #else
     [Table("LoginSessions", Schema = "account")]
 #endif
-    internal partial class LoginSession : EntityObject
+    internal partial class LoginSession : VersionEntityObject
     {
         private DateTime? _logoutTime;
         private SecureIdentity? _identity;

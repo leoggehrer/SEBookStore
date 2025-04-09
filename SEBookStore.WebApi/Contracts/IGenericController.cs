@@ -1,14 +1,12 @@
 ﻿//@CodeCopy
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using SEBookStore.Common.Contracts;
-using SEBookStore.WebApi.Models;
 
 namespace SEBookStore.WebApi.Contracts
 {
     public interface IGenericController<TModel, TContract>
-        where TModel : ModelObject, TContract, new()
-        where TContract : IIdentifiable
+        where TModel : CommonModels.ModelObject, TContract, new()
+        where TContract : CommonContracts.IIdentifiable
     {
         ActionResult<IEnumerable<TModel>> Query(string predicate);
         ActionResult<IEnumerable<TModel>> Get();

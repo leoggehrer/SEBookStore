@@ -12,6 +12,7 @@ global using IdType = System.Int32;
 
 global using Common = SEBookStore.Common;
 global using CommonContracts = SEBookStore.Common.Contracts;
+global using CommonModels = SEBookStore.Common.Models;
 global using CommonModules = SEBookStore.Common.Modules;
 global using SEBookStore.Common.Extensions;
 
