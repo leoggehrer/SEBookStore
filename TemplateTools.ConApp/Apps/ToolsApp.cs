@@ -70,12 +70,6 @@ namespace TemplateTools.ConApp.Apps
                 new()
                 {
                     Key = $"{++mnuIdx}",
-                    Text = ToLabelText("Force", "Change force flag"),
-                    Action = (self) => ChangeForce(),
-                },
-                new()
-                {
-                    Key = $"{++mnuIdx}",
                     Text = ToLabelText("Path", "Change solution path"),
                     Action = (self) => ChangeSolutionPath(),
                 },
@@ -109,45 +103,15 @@ namespace TemplateTools.ConApp.Apps
                 new()
                 {
                     Key = (++mnuIdx).ToString(),
-                    Text = ToLabelText("Comparison", "Compares a project with the template"),
-                    Action = (self) => new ComparisonApp().Run([]),
+                    Text = ToLabelText("Synchronization", "Matches a project with the template"),
+                    Action = (self) => new SynchronizationApp().Run([]),
                 },
-                //new()
-                //{
-                //    Key = (++mnuIdx).ToString(),
-                //    Text = ToLabelText("Documentation", "Generate documentation for this solution"),
-                //    Action = (self) => new DocuGeneratorApp().Run([]),
-                //},
-                //new()
-                //{
-                //    Key = (++mnuIdx).ToString(),
-                //    Text = ToLabelText("Formatting", "Formatting source code files"),
-                //    Action = (self) => new FormatterApp().Run([]),
-                //},
-                //new()
-                //{
-                //    Key = (++mnuIdx).ToString(),
-                //    Text = ToLabelText("Deleting", "Deleting generated files"),
-                //    Action = (self) => DeleteGeneratedFiles(),
-                //},
                 new()
                 {
                     Key = (++mnuIdx).ToString(),
                     Text = ToLabelText("Cleanup", "Deletes the temporary directories"),
                     Action = (self) => new CleanupApp().Run([]),
                 },
-                //new()
-                //{
-                //    Key = (++mnuIdx).ToString(),
-                //    Text = ToLabelText("Html-Tools", "Useful html tools like formatter etc."),
-                //    Action = (self) => new HtmlToolsApp().Run([]),
-                //},
-                //new()
-                //{
-                //    Key = (++mnuIdx).ToString(),
-                //    Text = ToLabelText("ChatGPT", "Question to ChatGPT"),
-                //    Action = (self) => new ChatGPTApp().Run([]),
-                //},
             };
             return [.. menuItems.Union(CreateExitMenuItems())];
         }
@@ -158,7 +122,7 @@ namespace TemplateTools.ConApp.Apps
         /// <param name="sourcePath">The path of the solution.</param>
         protected override void PrintHeader()
         {
-            List<KeyValuePair<string, object>> headerParams = [new("Force flag:", Force), new("Solution path:", SolutionPath)];
+            List<KeyValuePair<string, object>> headerParams = [new("Solution path:", SolutionPath)];
 
             base.PrintHeader("Template Tools", [.. headerParams]);
         }

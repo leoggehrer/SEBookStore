@@ -3,6 +3,45 @@ namespace SEBookStore.Logic.DataContext
 {
     partial class EntitySet<TEntity>
     {
+        #region overridables
+        /// <summary>
+        /// Copies properties from the source entity to the target entity.
+        /// </summary>
+        /// <param name="target">The target entity.</param>
+        /// <param name="source">The source entity.</param>
+        protected abstract void CopyProperties(TEntity target, TEntity source);
+
+        /// <summary>
+        /// Performs actions before creating an entity.
+        /// </summary>
+        /// <returns>A new instance of the entity or a custom instance if overridden.</returns>
+        protected virtual TEntity? BeforeExecuteCreating() { return default; }
+
+        /// <summary>
+        /// Performs actions after an entity is created.
+        /// </summary>
+        /// <param name="entity">The newly created entity.</param>
+        protected virtual void AfterExecuteCreated(TEntity entity) { }
+
+        /// <summary>
+        /// Performs actions before adding an entity to the set.
+        /// </summary>
+        /// <param name="entity">The entity to be added.</param>
+        protected virtual void BeforeExecuteAdding(TEntity entity) { }
+
+        /// <summary>
+        /// Performs actions before updating an entity in the set.
+        /// </summary>
+        /// <param name="entity">The entity to be updated.</param>
+        protected virtual void BeforeExecuteUpdating(TEntity entity) { }
+
+        /// <summary>
+        /// Performs actions before removing an entity from the set.
+        /// </summary>
+        /// <param name="entity">The entity to be removed.</param>
+        protected virtual void BeforeExecuteRemoving(TEntity entity) { }
+        #endregion overridables
+
         #region methods
         /// <summary>
         /// Creates a new instance of the entity.
@@ -10,7 +49,14 @@ namespace SEBookStore.Logic.DataContext
         /// <returns>A new instance of the entity.</returns>
         internal virtual TEntity ExecuteCreate()
         {
-            return new TEntity();
+            var result = BeforeExecuteCreating();
+
+            if (result == default)
+            {
+                result = new TEntity();
+            }
+            AfterExecuteCreated(result);
+            return result;
         }
 
         /// <summary>
@@ -38,16 +84,16 @@ namespace SEBookStore.Logic.DataContext
         internal virtual IQueryable<TEntity> ExecuteAsQuerySet() => DbSet.AsQueryable();
 
         /// <summary>
-        /// Gets the no tracking queryable set of entities.
+        /// Gets the no-tracking queryable set of entities.
         /// </summary>
-        /// <returns>An <see cref="IQueryable{TEntity}"/> that can be used to query the set of entities.</returns>
+        /// <returns>An <see cref="IQueryable{TEntity}"/> that can be used to query the set of entities without tracking changes.</returns>
         internal virtual IQueryable<TEntity> ExecuteAsNoTrackingSet() => ExecuteAsQuerySet().AsNoTracking();
 
         /// <summary>
-        /// Returns the element of type T with the identification of id.
+        /// Returns the entity with the specified identifier.
         /// </summary>
-        /// <param name="id">The identification.</param>
-        /// <returns>The element of the type T with the corresponding identification.</returns>
+        /// <param name="id">The identifier of the entity.</param>
+        /// <returns>The entity with the specified identifier, or null if not found.</returns>
         internal virtual ValueTask<TEntity?> ExecuteGetByIdAsync(IdType id)
         {
             return DbSet.FindAsync(id);
@@ -61,16 +107,27 @@ namespace SEBookStore.Logic.DataContext
         internal virtual TEntity ExecuteAdd(TEntity entity)
         {
             BeforeAdding(entity);
+            BeforeExecuteAdding(entity);
             return DbSet.Add(entity).Entity;
         }
 
         /// <summary>
-        /// Adds the specified range of entities to the set.
+        /// Adds a range of entities to the set.
         /// </summary>
-        /// <param name="entities">The entities to add.</param>
-        internal virtual void ExecuteAddRange(IEnumerable<TEntity> entities)
+        /// <param name="entities">The collection of entities to add.</param>
+        /// <returns>A collection of the added entities.</returns>
+        internal virtual IEnumerable<TEntity> ExecuteAddRange(IEnumerable<TEntity> entities)
         {
-            DbSet.AddRange(entities);
+            var result = new List<TEntity>();
+
+            entities.ForEach(e =>
+            {
+                BeforeAdding(e);
+                BeforeExecuteAdding(e);
+                result.Add(e);
+            });
+            DbSet.AddRange(result);
+            return result;
         }
 
         /// <summary>
@@ -81,30 +138,52 @@ namespace SEBookStore.Logic.DataContext
         internal virtual async Task<TEntity> ExecuteAddAsync(TEntity entity)
         {
             BeforeAdding(entity);
+            BeforeExecuteAdding(entity);
             var result = await DbSet.AddAsync(entity).ConfigureAwait(false);
 
             return result.Entity;
         }
 
         /// <summary>
-        /// Asynchronously adds the specified range of entities to the set.
+        /// Asynchronously adds a range of entities to the set.
         /// </summary>
-        /// <param name="entities">The entities to add.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        internal virtual async Task ExecuteAddRangeAsync(IEnumerable<TEntity> entities)
+        /// <param name="entities">The collection of entities to add.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains a collection of the added entities.
+        /// </returns>
+        internal virtual async Task<IEnumerable<TEntity>> ExecuteAddRangeAsync(IEnumerable<TEntity> entities)
         {
-            await DbSet.AddRangeAsync(entities).ConfigureAwait(false);
+            var result = new List<TEntity>();
+
+            entities.ForEach(e =>
+            {
+                BeforeAdding(e);
+                BeforeExecuteAdding(e);
+                result.Add(e);
+            });
+            await DbSet.AddRangeAsync(result).ConfigureAwait(false);
+            return result;
         }
 
         /// <summary>
         /// Updates the specified entity in the set.
+        /// </summary>
+        /// <param name="entity">The entity with updated values.</param>
+        /// <returns>The updated entity, or null if the entity was not found.</returns>
+        internal virtual TEntity? ExecuteUpdate(TEntity entity)
+        {
+            return ExecuteUpdate(entity.Id, entity);
+        }
+
+        /// <summary>
+        /// Updates the specified entity in the set by its identifier.
         /// </summary>
         /// <param name="id">The identifier of the entity to update.</param>
         /// <param name="entity">The entity with updated values.</param>
         /// <returns>The updated entity, or null if the entity was not found.</returns>
         internal virtual TEntity? ExecuteUpdate(IdType id, TEntity entity)
         {
-            BeforeUpdating(entity);
+            BeforeExecuteUpdating(entity);
 
             var existingEntity = DbSet.Find(id);
             if (existingEntity != null)
@@ -117,12 +196,22 @@ namespace SEBookStore.Logic.DataContext
         /// <summary>
         /// Asynchronously updates the specified entity in the set.
         /// </summary>
+        /// <param name="entity">The entity with updated values.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the updated entity, or null if the entity was not found.</returns>
+        internal virtual Task<TEntity?> ExecuteUpdateAsync(TEntity entity)
+        {
+            return ExecuteUpdateAsync(entity.Id, entity);
+        }
+
+        /// <summary>
+        /// Asynchronously updates the specified entity in the set by its identifier.
+        /// </summary>
         /// <param name="id">The identifier of the entity to update.</param>
         /// <param name="entity">The entity with updated values.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the updated entity, or null if the entity was not found.</returns>
         internal virtual async Task<TEntity?> ExecuteUpdateAsync(IdType id, TEntity entity)
         {
-            BeforeUpdating(entity);
+            BeforeExecuteUpdating(entity);
 
             var existingEntity = await DbSet.FindAsync(id).ConfigureAwait(false);
             if (existingEntity != null)
@@ -143,11 +232,35 @@ namespace SEBookStore.Logic.DataContext
 
             if (entity != null)
             {
-                BeforeRemoving(entity);
+                BeforeExecuteRemoving(entity);
                 DbSet.Remove(entity);
             }
             return entity;
         }
         #endregion methods
+
+        #region context methods
+        /// <summary>
+        /// Saves all changes made in the context to the database.
+        /// </summary>
+        /// <returns>The number of state entries written to the database.</returns>
+        internal virtual int ExecuteSaveChanges()
+        {
+            return Context.ExecuteSaveChanges();
+        }
+
+        /// <summary>
+        /// Asynchronously saves all changes made in the context to the database.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous save operation. The task result contains the number of state entries written to the database.</returns>
+        internal virtual Task<int> ExecuteSaveChangesAsync()
+        {
+            return Context.ExecuteSaveChangesAsync();
+        }
+        #endregion context methods
+
+        #region partial methods
+        partial void BeforeAdding(TEntity entity);
+        #endregion partial methods
     }
 }

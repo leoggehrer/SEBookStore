@@ -21,7 +21,7 @@
      + Double getPrice()
      + setPrice(Double value)
     ---
-    + {static}Boolean CheckISBNNumer(String number)
+    + {static}Boolean CheckISBNNumber(String number)
     ---
     + String get_ISBNNumber()
     + Void set_ISBNNumber(String value)
@@ -36,7 +36,7 @@
     + Double get_Price()
     + Void set_Price(Double value)
     + String ToString()
-    + Void Validate(IContext context)
+    + Void Validate(IContext context, EntityState entityState)
 }
 +abstract class EntityObject #white {
     - Int32 _id
@@ -47,8 +47,10 @@
     + Int32 get_Id()
     + Void set_Id(Int32 value)
 }
++abstract class DbObject #white {
+}
 interface IValidatableEntity #lightgrey {
-    + Void Validate(IContext context)
+    + Void Validate(IContext context, EntityState entityState)
 }
 interface IIdentifiable #lightgrey {
      + Int32 getId()
@@ -56,8 +58,10 @@ interface IIdentifiable #lightgrey {
     ---
     + Int32 get_Id()
     + Void set_Id(Int32 value)
+    + Void CopyProperties(IIdentifiable other)
 }
 EntityObject <|-- Book
+DbObject <|-- EntityObject
 IValidatableEntity ()- Book
 IIdentifiable ()- EntityObject
 @enduml

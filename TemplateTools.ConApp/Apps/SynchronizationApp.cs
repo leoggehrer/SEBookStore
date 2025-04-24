@@ -6,7 +6,7 @@ namespace TemplateTools.ConApp.Apps
     /// <summary>
     /// Represents an application for comparing and synchronizing source code files between a source path and multiple target paths.
     /// </summary>
-    internal partial class ComparisonApp : ConsoleApplication
+    internal partial class SynchronizationApp : ConsoleApplication
     {
         #region Class-Constructors
         /// <summary>
@@ -15,7 +15,7 @@ namespace TemplateTools.ConApp.Apps
         /// <remarks>
         /// This constructor sets up the initial values for the static properties and arrays used in the ComparisonApp class.
         /// </remarks>
-        static ComparisonApp()
+        static SynchronizationApp()
         {
             ClassConstructing();
             ClassConstructed();
@@ -39,7 +39,7 @@ namespace TemplateTools.ConApp.Apps
         /// <summary>
         /// Represents an application for performing comparisons.
         /// </summary>
-        public ComparisonApp()
+        public SynchronizationApp()
         {
             Constructing();
             CodeSolutionPath = SolutionPath;
@@ -124,7 +124,10 @@ namespace TemplateTools.ConApp.Apps
                 {
                     Key = (++mnuIdx).ToString(),
                     Text = ToLabelText("Path", "Change the source solution path"),
-                    Action = (self) => CodeSolutionPath = ChangeTemplateSolutionPath(CodeSolutionPath, MaxSubPathDepth, ReposPath),
+                    Action = (self) =>
+                    {
+                        CodeSolutionPath = ChangeTemplateSolutionPath(CodeSolutionPath, MaxSubPathDepth, ReposPath);
+                    }
                 },
                 new()
                 {
@@ -161,12 +164,12 @@ namespace TemplateTools.ConApp.Apps
                 {
                     Key = (++mnuIdx).ToString(),
                     OptionalKey = "a",
-                    Text = ToLabelText("Comparison with", $"{path.Replace(ReposPath, ".")}", 19, ' '),
+                    Text = ToLabelText("Synchronize with", $"{path.Replace(ReposPath, ".")}", 19, ' '),
                     Action = (self) =>
                     {
                         var targetPath = self.Params["path"]?.ToString() ?? string.Empty;
 
-                        new PartialComparisonApp(CodeSolutionPath, targetPath).Run([]);
+                        new PartialSynchronizationApp(CodeSolutionPath, targetPath).Run([]);
                     },
                     Params = new() { { "path", path } },
                 });
@@ -185,7 +188,7 @@ namespace TemplateTools.ConApp.Apps
             }
             headerParams.Add(new("Source code path:", CodeSolutionPath));
 
-            base.PrintHeader("Template Comparison", [.. headerParams]);
+            base.PrintHeader("Template Synchronization", [.. headerParams]);
         }
         #endregion overrides
 

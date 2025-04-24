@@ -22,7 +22,7 @@ namespace SEBookStore.Logic.Entities
         /// <item><description>The price is not between EUR 1 and EUR 10,000.</description></item>
         /// </list>
         /// </exception>
-        public void Validate(IContext context)
+        public void Validate(IContext context, EntityState entityState)
         {
             // A1
             if (CheckISBNNumber(ISBNNumber) == false)

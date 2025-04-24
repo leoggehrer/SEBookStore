@@ -7,6 +7,13 @@ namespace SEBookStore.Common.Contracts
     public partial interface IVersionable : IIdentifiable
     {
 #if ROWVERSION_ON
+
+#if POSTGRES_ON
+        /// <summary>
+        /// Gets the row version associated with the entity.
+        /// </summary>
+        uint RowVersion { get; protected set; }
+#else
         /// <summary>
         /// Gets the row version associated with the entity.
         /// </summary>
@@ -15,6 +22,8 @@ namespace SEBookStore.Common.Contracts
         /// It can be used for optimistic concurrency control in data storage and retrieval.
         /// </remarks>
         byte[]? RowVersion { get; protected set; }
+#endif
+
 #endif
     }
 }

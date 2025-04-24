@@ -40,13 +40,6 @@ namespace SEBookStore.Logic.Contracts
         IQueryable<TEntity> AsNoTrackingSet();
 
         /// <summary>
-        /// Returns the element of type T with the identification of id.
-        /// </summary>
-        /// <param name = "id">The identification.</param>
-        /// <returns>The element of the type T with the corresponding identification.</returns>
-        ValueTask<TEntity?> GetByIdAsync(IdType id);
-
-        /// <summary>
         /// Adds a new entity to the set.
         /// </summary>
         /// <param name="entity">The entity to add.</param>
@@ -54,10 +47,11 @@ namespace SEBookStore.Logic.Contracts
         TEntity Add(TEntity entity);
 
         /// <summary>
-        /// Adds a range of entities to the set.
+        /// Adds a range of new entities to the set.
         /// </summary>
-        /// <param name="entities">The entities to add.</param>
-        void AddRange(IEnumerable<TEntity> entities);
+        /// <param name="entities">The collection of entities to add.</param>
+        /// <returns>The added entities.</returns>
+        IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entities);
 
         /// <summary>
         /// Asynchronously adds a new entity to the set.
@@ -67,34 +61,18 @@ namespace SEBookStore.Logic.Contracts
         Task<TEntity> AddAsync(TEntity entity);
 
         /// <summary>
-        /// Asynchronously adds a range of entities to the set.
+        /// Asynchronously adds a range of new entities to the set.
         /// </summary>
-        /// <param name="entities">The entities to add.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        Task AddRangeAsync(IEnumerable<TEntity> entities);
+        /// <param name="entities">The collection of entities to add.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the added entities.</returns>
+        Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
-        /// Updates an entity in the set by its identifier.
+        /// Removes the specified entity from the set.
         /// </summary>
-        /// <param name="id">The identifier of the entity to update.</param>
-        /// <param name="entity">The updated entity.</param>
-        /// <returns>The updated entity, or null if the entity was not found.</returns>
-        TEntity? Update(IdType id, TEntity entity);
-
-        /// <summary>
-        /// Asynchronously updates an entity in the set by its identifier.
-        /// </summary>
-        /// <param name="id">The identifier of the entity to update.</param>
-        /// <param name="entity">The updated entity.</param>
-        /// <returns>A task that represents the asynchronous operation. The task result contains the updated entity, or null if the entity was not found.</returns>
-        Task<TEntity?> UpdateAsync(IdType id, TEntity entity);
-
-        /// <summary>
-        /// Removes an entity from the set by its identifier.
-        /// </summary>
-        /// <param name="id">The identifier of the entity to remove.</param>
+        /// <param name="entity">The entity to remove.</param>
         /// <returns>The removed entity, or null if the entity was not found.</returns>
-        TEntity? Remove(IdType id);
+        TEntity? Remove(TEntity entity);
 
         /// <summary>
         /// Disposes the entity set.

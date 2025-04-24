@@ -1,4 +1,6 @@
 ﻿//@CodeCopy
+using System.ComponentModel.DataAnnotations;
+
 namespace SEBookStore.Common.Models
 {
     /// <summary>
@@ -8,10 +10,21 @@ namespace SEBookStore.Common.Models
     {
         #region properties
 #if ROWVERSION_ON
+
+#if POSTGRES_ON
         /// <summary>
-        /// Row version of the entity.
+        /// Gets or sets the row version of the entity.
         /// </summary>
-        public virtual byte[]? RowVersion { get; set; }
+        [Timestamp]
+        public uint RowVersion { get; set; }
+#else
+        /// <summary>
+        /// Gets or sets the row version of the entity.
+        /// </summary>
+        [Timestamp]
+        public byte[]? RowVersion { get; set; } = [];
+#endif
+
 #endif
         #endregion properties
 
@@ -24,10 +37,16 @@ namespace SEBookStore.Common.Models
         protected override int GetHashCode(List<object?> values)
         {
 #if ROWVERSION_ON
+
+#if POSTGRES_ON
+            values.Add(RowVersion);
+#else
             if (RowVersion != null)
             {
                 values.Add(RowVersion);
             }
+#endif
+
 #endif
             return base.GetHashCode(values);
         }

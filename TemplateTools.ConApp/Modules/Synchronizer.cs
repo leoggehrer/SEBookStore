@@ -1,5 +1,4 @@
 ﻿//@CodeCopy
-
 using System.Text;
 
 namespace TemplateTools.ConApp.Modules

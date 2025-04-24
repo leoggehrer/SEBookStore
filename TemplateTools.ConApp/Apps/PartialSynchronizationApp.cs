@@ -4,7 +4,7 @@ using TemplateTools.ConApp.Modules;
 
 namespace TemplateTools.ConApp.Apps
 {
-    public partial class PartialComparisonApp : ConsoleApplication
+    public partial class PartialSynchronizationApp : ConsoleApplication
     {
         #region Class-Constructors
         /// <summary>
@@ -13,7 +13,7 @@ namespace TemplateTools.ConApp.Apps
         /// <remarks>
         /// This constructor sets up the initial values for the static properties and arrays used in the ComparisonApp class.
         /// </remarks>
-        static PartialComparisonApp()
+        static PartialSynchronizationApp()
         {
             ClassConstructing();
             ClassConstructed();
@@ -37,7 +37,7 @@ namespace TemplateTools.ConApp.Apps
         /// <summary>
         /// Represents an application for performing comparisons.
         /// </summary>
-        public PartialComparisonApp(string sourceCodePath, string targetCodePath)
+        public PartialSynchronizationApp(string sourceCodePath, string targetCodePath)
         {
             Constructing();
             PageSize = 20;
@@ -144,7 +144,7 @@ namespace TemplateTools.ConApp.Apps
             menuItems.AddRange(CreatePageMenuItems(ref mnuIdx, targetPaths, (item, menuItem) =>
             {
                 menuItem.OptionalKey = "a";
-                menuItem.Text = ToLabelText("Comparison with", $"{item.Replace(TargetCodePath, string.Empty)}");
+                menuItem.Text = ToLabelText("Synchronize with", $"{item.Replace(TargetCodePath, string.Empty)}");
                 menuItem.Action = (self) =>
                 {
                     var targetPath = self.Params["targetpath"]?.ToString() ?? string.Empty;
@@ -165,10 +165,11 @@ namespace TemplateTools.ConApp.Apps
             {
                 headerParams.Add(new($"  {SourceLabels[i],-15} =>", TargetLabels[i]));
             }
+            headerParams.Add(new(new string('-', 32), string.Empty));
             headerParams.Add(new("Source code path:", SourceCodePath));
             headerParams.Add(new("Target code path:", TargetCodePath));
 
-            base.PrintHeader("Template Partial Comparison", [.. headerParams]);
+            base.PrintHeader("Template Partial Synchronization", [.. headerParams]);
         }
         #endregion overrides
 

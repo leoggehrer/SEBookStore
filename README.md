@@ -40,7 +40,7 @@ Das Datenmodell für ***BookStore*** hat folgenden Aufbau:
 | Title         | String | 256       | No       | Yes+ | Yes    | RW   |
 | Description   | String | 1024      | Yes      | No   | Yes    | RW   |
 | YearOfRelease | int    | --------- | -------- | No   | Yes    | RW   |
-| Price         | double | --------- | -------- | No   | Yes    | RW |
+| Price         | double | --------- | -------- | No   | Yes    | RW   |
 
 +...beide zusammen sind eindeutig
 

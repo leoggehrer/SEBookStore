@@ -29,33 +29,6 @@ namespace SEBookStore.Logic.DataContext
         protected DbSet<TEntity> DbSet => _dbSet!;
         #endregion properties
 
-        #region overridables
-        /// <summary>
-        /// Copies properties from the source entity to the target entity.
-        /// </summary>
-        /// <param name="target">The target entity.</param>
-        /// <param name="source">The source entity.</param>
-        protected abstract void CopyProperties(TEntity target, TEntity source);
-
-        /// <summary>
-        /// Performs actions before adding an entity.
-        /// </summary>
-        /// <param name="entity">The entity to be added.</param>
-        protected virtual void BeforeAdding(TEntity entity) { }
-
-        /// <summary>
-        /// Performs actions before updating an entity.
-        /// </summary>
-        /// <param name="entity">The entity to be updated.</param>
-        protected virtual void BeforeUpdating(TEntity entity) { }
-
-        /// <summary>
-        /// Performs actions before removing an entity.
-        /// </summary>
-        /// <param name="entity">The entity to be removed.</param>
-        protected virtual void BeforeRemoving(TEntity entity) { }
-        #endregion ovveridables
-
         #region methods
         /// <summary>
         /// Creates a new instance of the entity.
@@ -139,12 +112,13 @@ namespace SEBookStore.Logic.DataContext
         /// <summary>
         /// Adds a range of entities to the set.
         /// </summary>
-        /// <param name="entities">The entities to add.</param>
-        public virtual void AddRange(IEnumerable<TEntity> entities)
+        /// <param name="entities">The collection of entities to add.</param>
+        /// <returns>The added entities.</returns>
+        public virtual IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entities)
         {
             BeforeAccessing(MethodBase.GetCurrentMethod()!);
 
-            ExecuteAddRange(entities);
+            return ExecuteAddRange(entities);
         }
 
         /// <summary>
@@ -162,9 +136,9 @@ namespace SEBookStore.Logic.DataContext
         /// <summary>
         /// Asynchronously adds a range of entities to the set.
         /// </summary>
-        /// <param name="entities">The entities to add.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        public virtual Task AddRangeAsync(IEnumerable<TEntity> entities)
+        /// <param name="entities">The collection of entities to add.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the added entities.</returns>
+        public virtual Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities)
         {
             BeforeAccessing(MethodBase.GetCurrentMethod()!.GetAsyncOriginal());
 
@@ -195,6 +169,18 @@ namespace SEBookStore.Logic.DataContext
             BeforeAccessing(MethodBase.GetCurrentMethod()!.GetAsyncOriginal());
 
             return ExecuteUpdateAsync(id, entity);
+        }
+
+        /// <summary>
+        /// Removes the specified entity from the set.
+        /// </summary>
+        /// <param name="entity">The entity to remove.</param>
+        /// <returns>The removed entity, or null if the entity was not found.</returns>
+        public virtual TEntity? Remove(TEntity entity)
+        {
+            BeforeAccessing(MethodBase.GetCurrentMethod()!);
+
+            return Remove(entity.Id);
         }
 
         /// <summary>

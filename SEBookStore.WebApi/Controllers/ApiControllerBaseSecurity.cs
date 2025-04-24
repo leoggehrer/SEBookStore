@@ -1,11 +1,9 @@
 ﻿//@CodeCopy
 #if ACCOUNT_ON
-using SEBookStore.WebApi.Contracts;
 
 namespace SEBookStore.WebApi.Controllers
 {
-//    [TypeFilter(typeof(ActionFilterSecurity))]
-    partial class GenericController<TModel, TEntity, TContract>
+    partial class ApiControllerBase
     {
         #region fields
         private string? _sessionToken;
@@ -83,13 +81,6 @@ namespace SEBookStore.WebApi.Controllers
             return result;
         }
         #endregion methods
-
-        #region partial methods
-        partial void OnReadContextAccessor(IContextAccessor contextAccessor)
-        {
-            contextAccessor.SessionToken = SessionToken;
-        }
-        #endregion partial methods
     }
 }
 #endif
