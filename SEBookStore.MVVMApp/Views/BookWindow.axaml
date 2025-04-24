@@ -4,14 +4,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="using:SEBookStore.MVVMApp.ViewModels"
 		xmlns:views="using:SEBookStore.MVVMApp.Views"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
+		d:DesignWidth="800"
+		d:DesignHeight="350"
+		Width="800"
+		Height="350"
         x:Class="SEBookStore.MVVMApp.Views.BookWindow"
 		x:DataType="vm:BookViewModel"
+		WindowStartupLocation="CenterOwner"
         Title="Buch">
 
 	<Window.DataContext>
-		<vm:BookViewModel></vm:BookViewModel>
+		<vm:BookViewModel/>
 	</Window.DataContext>
-	<views:BookUserControl />
-	
+
+	<views:BookUserControl DataContext="{Binding}">
+	</views:BookUserControl>
+
 </Window>

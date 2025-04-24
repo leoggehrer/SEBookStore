@@ -1,4 +1,5 @@
-﻿using SEBookStore.Logic.Exceptions;
+﻿#if GENERATEDCODE_ON
+using SEBookStore.Logic.Exceptions;
 
 namespace SEBookStore.ConApp
 {
@@ -22,7 +23,7 @@ namespace SEBookStore.ConApp
 
             foreach (var book in books)
             {
-                using var context = Logic.DataContext.Factory.CreateContext();
+                using var context = CreateContext();
 
                 try
                 {
@@ -42,3 +43,4 @@ namespace SEBookStore.ConApp
         }
     }
 }
+#endif

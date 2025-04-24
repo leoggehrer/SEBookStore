@@ -18,6 +18,7 @@ namespace SEBookStore.MVVMApp.ViewModels
         private string _filter = string.Empty;
         private TModel? selectedItem;
         private readonly List<TModel> _models = [];
+        private readonly List<TModel> _filteredModels = [];
         #endregion fields
 
         #region properties
@@ -48,13 +49,7 @@ namespace SEBookStore.MVVMApp.ViewModels
         {
             get
             {
-                var result = new ObservableCollection<TModel>();
-
-                foreach (var model in _models)
-                {
-                    result.Add(model);
-                }
-                return result;
+                return new ObservableCollection<TModel>(_filteredModels);
             }
         }
         #endregion properties
@@ -97,6 +92,7 @@ namespace SEBookStore.MVVMApp.ViewModels
 
             viewModel.CloseAction = viewModelWindow.Close;
             viewModelWindow.DataContext = viewModel;
+            viewModel.Model = model;
             // Aktuelles Hauptfenster als Parent setzen
             var mainWindow = (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
 

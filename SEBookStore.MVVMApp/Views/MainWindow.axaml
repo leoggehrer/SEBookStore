@@ -10,21 +10,15 @@
 		Width="1000"
 		Height="600"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Fima-Manager">
+        Title="BookStore">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
 	<TabControl Margin="5">
-		<TabItem Header="Item1">
+		<TabItem Header="Bücher">
 			<views:BooksUserControl />
-		</TabItem>
-		<TabItem Header="Item2">
-			<TextBlock Margin="5">This is tab 2 for item2</TextBlock>
-		</TabItem>
-		<TabItem Header="item3">
-			<TextBlock Margin="5">This is tab 3 for item3</TextBlock>
 		</TabItem>
 	</TabControl>	
 

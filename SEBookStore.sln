@@ -1,29 +1,29 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17 
+# Visual Studio Version 17
 VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D0B66941-EF6B-427B-BB89-A8B778530066}") = "SEBookStore.Logic", "SEBookStore.Logic\SEBookStore.Logic.csproj", "{B9071805-DAFE-442C-9F34-E4DD315E1D8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEBookStore.Logic", "SEBookStore.Logic\SEBookStore.Logic.csproj", "{B9071805-DAFE-442C-9F34-E4DD315E1D8F}"
 EndProject
-Project("{4A98B302-F513-49F3-B52B-078396CB46C6}") = "SEBookStore.ConApp", "SEBookStore.ConApp\SEBookStore.ConApp.csproj", "{9CD3496A-889C-4991-9274-8AEF097556E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEBookStore.ConApp", "SEBookStore.ConApp\SEBookStore.ConApp.csproj", "{9CD3496A-889C-4991-9274-8AEF097556E3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}")="SolutionItems","SolutionItems","{A288F100-2A15-4E8F-B686-8ACD1EB87D9D}"
-	ProjectSection(SolutionItems)=preProject
-		README.md=README.md
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{A288F100-2A15-4E8F-B686-8ACD1EB87D9D}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{78DDA96E-CD9E-453E-BAB8-E86E6E6C3E77}") = "SEBookStore.WebApi", "SEBookStore.WebApi\SEBookStore.WebApi.csproj", "{BF70F327-1664-4BD7-AF5B-DAB306FFC3A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEBookStore.WebApi", "SEBookStore.WebApi\SEBookStore.WebApi.csproj", "{BF70F327-1664-4BD7-AF5B-DAB306FFC3A6}"
 EndProject
-Project("{8743059D-6E29-49E7-8996-1F1EDD8F790E}") = "SEBookStore.Common", "SEBookStore.Common\SEBookStore.Common.csproj", "{D622D224-3200-4BFE-9757-9126B15EA861}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEBookStore.Common", "SEBookStore.Common\SEBookStore.Common.csproj", "{D622D224-3200-4BFE-9757-9126B15EA861}"
 EndProject
-Project("{5A141289-D4A8-4BA7-A4E9-D1FAB8EBDEA8}") = "TemplateTools.ConApp", "TemplateTools.ConApp\TemplateTools.ConApp.csproj", "{49C667A7-CBFD-4B5F-9EB4-942CF5EB0E05}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateTools.ConApp", "TemplateTools.ConApp\TemplateTools.ConApp.csproj", "{49C667A7-CBFD-4B5F-9EB4-942CF5EB0E05}"
 EndProject
-Project("{8C586076-70EA-4F6D-92F9-89307368088B}") = "TemplateTools.Logic", "TemplateTools.Logic\TemplateTools.Logic.csproj", "{D665E4F6-446C-45C5-A4E5-B0E7CDBEE7DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateTools.Logic", "TemplateTools.Logic\TemplateTools.Logic.csproj", "{D665E4F6-446C-45C5-A4E5-B0E7CDBEE7DB}"
 EndProject
-Project("{F8A1D6D9-E0A3-4034-9A66-F530C3BB5419}") = "SEBookStore.CodeGenApp", "SEBookStore.CodeGenApp\SEBookStore.CodeGenApp.csproj", "{0D967C58-C9F9-4EBB-A958-F01E42C32A54}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEBookStore.CodeGenApp", "SEBookStore.CodeGenApp\SEBookStore.CodeGenApp.csproj", "{0D967C58-C9F9-4EBB-A958-F01E42C32A54}"
 EndProject
-Project("{27AAA231-B78D-4EA8-BBED-E4A42BED1D6D}") = "SEBookStore.MVVMApp", "SEBookStore.MVVMApp\SEBookStore.MVVMApp.csproj", "{787A7471-C70C-4EFB-976F-4FEFAA98E597}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEBookStore.MVVMApp", "SEBookStore.MVVMApp\SEBookStore.MVVMApp.csproj", "{787A7471-C70C-4EFB-976F-4FEFAA98E597}"
 EndProject
-EndProjectGlobal
+Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

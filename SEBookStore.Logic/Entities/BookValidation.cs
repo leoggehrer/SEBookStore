@@ -9,7 +9,7 @@ namespace SEBookStore.Logic.Entities
     partial class Book : IValidatableEntity
     {
         /// <summary>
-        /// Validates the properties of the book entity.
+        /// Validates the properties of the book entity.o
         /// </summary>
         /// <param name="context">The context in which the validation is performed.</param>
         /// <exception cref="BusinessException">
