@@ -221,16 +221,6 @@ namespace TemplateTools.Logic.Generation
             result.AddRange(CreatePartialStaticConstrutor(viewModelName));
             result.AddRange(CreatePartialConstrutor("public", viewModelName));
 
-            result.Add($"protected override Avalonia.Controls.Window CreateWindow()");
-            result.Add("{");
-            result.Add("throw new NotImplementedException();");
-            result.Add("}");
-
-            result.Add($"protected override GenericItemViewModel<{modelType}> CreateViewModel()");
-            result.Add("{");
-            result.Add("throw new NotImplementedException();");
-            result.Add("}");
-
             result.Add("}");
             result.EnvelopeWithANamespace(viewModelsNamespace, "using System;");
             result.FormatCSharpCode();

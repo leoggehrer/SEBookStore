@@ -1,36 +1,55 @@
 ﻿﻿﻿
-# POSE 6ABIF/6ACIF
+# BookStore
 
-## BookStore
+**Inhaltsverzeichnis:**
 
-### Lehrziele
+1. [Lehrziele](#lehrziele)
+2. [Einleitung](#einleitung)
+3. [Datenmodell und Datenbank](#datenmodell-und-datenbank)
+   - [Definition von ***Book***](#definition-von-book)
+4. [Aufgaben](#aufgaben)
+   - [Business-Logik](#business-logik)
+   - [Prüfung der ISBN-Nummern](#prufung-der-ISBN-nummern)
+   - [Beispiele](#beispiele)
+5. [Datenimport](#datenimport)      
+6. [Umsetzung der Aufgabe mit dem SETemplate](#umsetzung-der-aufgabe-mit-dem-SETemplate)
+   - [Schritt 1: Repository klonen](#schritt-1-repository-klonen)
+   - [Schritt 2: `SETemplate` mit der IDE öffnen](#schritt-2-SETemplate-mit-der-IDE-offnen)
+   - [Schritt 3: Starten der Anwendung `TemplateTools.ConApp`](#schritt-3-starten-der-anwendung-TemplateTools.ConApp)
+   - [Schritt 4: SETemplate  kopieren =>  SEBookStore](#schritt-4-SETemplate-kopieren-SEBookStore)
+   - [Schritt 5: `SEBookStore` mit der IDE öffnen](#schritt-5-SEBookStore-mit-der-IDE-offnen)
+   - [Schritt 6: Starten der Anwendung `TemplateTools.ConApp`](#schritt-6-starten-der-anwendung-TemplateTools.ConApp)
+   - [Schritt 7: `Preprocessor` einstellen](#schritt-7-preprocessor-einstellen)
+   - [Schritt 8: Entity-`Book` erstellen](#schritt-8-entity-book-erstellen)
+   - [Schritt 9: Validierung für das Entity-`Book` erstellen](#schritt-9-validierung-fur-das-entity-book-erstellen)
+   - [Schritt 10: Starten der `CodeGenerierung`](#schritt-10-starten-der-codegenerierung)
+   - [Schritt 2: `SETemplate` mit der IDE öffnen](#schritt-2-SETemplate-mit-der-IDE-offnen)
 
-- Umsetzung der SE-Architektur aus dem Unterricht
-- Erstellen von Schnittstellen
-- Erstellen des Datenbankzugriffs
+---
+
+## Lehrziele
+
+- Umsetzung der SE-Architektur mit dem SE-Template
 - Prüfen von Geschäftsregeln
+- Importieren von csv-Daten
 
-### Einleitung
+## Einleitung
 
-Das Projekt ***BookStore*** ist eine datenzentrierte Anwendung zur Verwaltung von Büchern. 
+Das Projekt ***SEBookStore*** ist eine datenzentrierte Anwendung zur Verwaltung von Büchern. Diese Anwendung wird mit dem [**SE-Template**](https://github.com/leoggehrer/SETemplate) erstellt. Das Template ist eine Vorlage für die Erstellung von .NET-Projekten und enthält bereits alle notwendigen Komponenten, um eine vollständige Anwendung zu erstellen.
 
-Zu entwickeln ist das Backend-System mit der Datenbank-Anbindung und einer Schnittstelle für das Importieren von csv-Daten.
-
-### Datenmodell und Datenbank
+## Datenmodell und Datenbank
 
 Das Datenmodell für ***BookStore*** hat folgenden Aufbau:
 
 ```txt
-
 +-------+--------+ 
 |                | 
-|     Book       + 
+|      Book      + 
 |                | 
 +-------+--------+ 
-
 ```
 
-#### Definition von ***Book***
+### Definition von ***Book***
 
 | Name          | Type   | MaxLength | Nullable |Unique|Db-Field|Access|
 |---------------|--------|-----------|----------|------|--------|------|
@@ -44,19 +63,15 @@ Das Datenmodell für ***BookStore*** hat folgenden Aufbau:
 
 +...beide zusammen sind eindeutig
 
-### Aufgaben  
+## Aufgaben  
 
-#### Backend-System  
-
-Entwickeln Sie ein **Backend-System** nach der im Unterricht vorgestellten SE-Architektur.
-
-##### Business-Logik  
+### Business-Logik  
 
 Das System muss einige Geschäftsregeln umsetzen. Diese Regeln werden im Backend implementiert und müssen mit UnitTests überprüft werden.
 
 > **HINWEIS:** Unter **Geschäftsregeln** (Business-Rules) versteht man **elementare technische Sachverhalte** im Zusammenhang mit Computerprogrammen. Mit *WENN* *DANN* Scenarien werden die einzelnen Regeln beschrieben.  
 
-Für den ***BookStore*** sind folgende Regeln definiert:
+Für den ***SEBookStore*** sind folgende Regeln definiert:
 
 | Rule | Subject | Type   | Operation | Description | Note |
 |------|---------|--------|-----------|-------------|------|
@@ -76,9 +91,9 @@ Für den ***BookStore*** sind folgende Regeln definiert:
 |      |         |**WENN**|           | eine *Book* erstellt oder bearbeitet wird, |  |
 |      |         |**DANN**|           | muss der `Price` festgelegt und im Bereich von 1 EUR bis 10.000 EUR sein. | |
 
-**Hinweis:** Falls einer der Geschäftsregeln nicht erfüllt ist, muss eine **BusinessException** mit einer entsprechenden Fehlermeldung (in Englisch) geworfen werden.
+> **Hinweis:** Falls einer der Geschäftsregeln nicht erfüllt ist, muss eine **BusinessException** mit einer entsprechenden Fehlermeldung (in Englisch) geworfen werden.
 
-##### Prüfung der ISBN-Nummern
+### Prüfung der ISBN-Nummern
 
 Die **Prüfziffer (10. Ziffer)** der ISBN-Nummer wird so berechnet:
 
@@ -87,7 +102,7 @@ Die **Prüfziffer (10. Ziffer)** der ISBN-Nummer wird so berechnet:
 3. Teile die Summe ganzzahlig durch 11.  
 4. Der **Rest** ist die Prüfziffer. Falls der Rest 10 ist, ist die Prüfziffer **„X“**.
 
-##### Beispiele:
+#### Beispiele:
 
 1. **ISBN 3-499-13599-[?]**  
    `3·1 + 4·2 + 9·3 + 9·4 + 1·5 + 3·6 + 5·7 + 9·8 + 9·9 = 285`  
@@ -105,16 +120,47 @@ Die **Prüfziffer (10. Ziffer)** der ISBN-Nummer wird so berechnet:
    `1·1 + 5·2 + 7·3 + 2·4 + 3·5 + 1·6 + 4·7 + 2·8 + 2·9 = 123`  
    `123 % 11 = 2` ⇒ Prüfziffer: **2**
 
-**Hinweis:** Wenn die ISBN-Prüfziffer nicht korrekt ist, **muss eine Ausnahme geworfen werden.**
+> **Hinweis:** Wenn die ISBN-Prüfziffer nicht korrekt ist, **muss eine Ausnahme geworfen werden.**
 
-### Datenimport
+## Datenimport
 
 Erstellen Sie ein Konsolenprogramm welches die Datenbank erzeugt und die beigelegte csv-Datei in die Datenbank importiert. Falls es beim Import zu Fehlern kommt (z.B. ISBN-Prüfziffer falsch), muss eine entsprechende Fehlermeldung ausgegeben werden.
 
+---
 
-### Umsetzung der Aufgabe mit dem SETemplate
+## Umsetzung der Aufgabe mit dem SETemplate
 
-Starten Sie die Anwendung `TemplateTools.ConApp`. Nach dem Start von `TemplateTools.ConApp` wird folgendes Menü angezeigt:
+Mit dem `SETemplate` können Sie die Aufgabenstellung in wenigen Schritten umsetzen. 
+
+**Umsetzungstabelle:**
+
+| Schritt | Beschreibung                                   |
+|---------|------------------------------------------------|
+| 1       | `SETemplate` klonen                            |
+| 2       | `SETemplate` mit der IDE öffnen                |
+| 3       | Starten der Anwendung `TemplateTools.ConApp`   |
+| 4       | `SETemplate` kopieren => `SEBookStore`         |
+| 5       | `SEBookStore` mit der IDE öffnen               |
+| 6       | Starten der Anwendung `TemplateTools.ConApp`   |
+| 7       | `Preprocessor` einstellen                      |
+| 8       | Entity-`Book` erstellen                        |
+| 9       | Validierung für das Entity-`Book` erstellen    |
+| 10      | Starten der `CodeGenerierung`                  |
+
+### Schritt 1: Repository klonen
+
+```bash
+git clone https://github.com/leoggehrer/SETemplate.git
+cd SETemplate
+```
+
+### Schritt 2: `SETemplate` mit der IDE öffnen
+
+Öffnen Sie das `SETemplate` mit der IDE (Visual Studio 2022, Rider oder Visual Studio Code). 
+
+### Schritt 3: Starten der Anwendung `TemplateTools.ConApp`
+
+Nach dem Start von `TemplateTools.ConApp` wird folgendes Menü angezeigt:
 
 ```bash
 ==============
@@ -136,6 +182,10 @@ Solution path: ...\SETemplate
 
 Choose [n|n,n|a...all|x|X]:
 ```
+
+---
+
+### Schritt 4: `SETemplate` kopieren => `SEBookStore`
 
 Wählen Sie die **Menü-Option:** 2 - `Copier` aus. Anschließend wird das folgende Menü angezeigt:
 
@@ -161,7 +211,7 @@ Template Copier
 Choose [n|n,n|a...all|x|X]:
 ```
 
-Wählen Sie die **Menü-Option:** 3 - `Target path` aus und geben Sie den Zielpfad an, in dem das Projekt erstellt werden soll. Zum Beispiel: `C:\Users\...\Documents\SEBookStore`.
+Wählen Sie die **Menü-Option:** 3 - `Target path` aus und geben Sie den Zielpfad an, in dem das Projekt erstellt werden soll. Zum Beispiel: `C:\Users\...\source\repos`.
 
 Wählen Sie die **Menü-Option:** 4 - `Target name` aus und geben Sie den Namen des Projektes an. Zum Beispiel: `SEBookStore`. Das Ergebnis sollte wie folgt aussehen:
 
@@ -172,7 +222,7 @@ Template Copier
 
 'SETemplate' from: ...\SETemplate
   -> copy ->
-'SEBookStore' to:  ...\SEBookStore
+'SEBookStore' to:  C:\Users\...\source\repos\SEBookStore
 
 [  ---] -----------------------------------------------------------------
 [    1] 1...................Change max sub path depth
@@ -187,7 +237,11 @@ Template Copier
 Choose [n|n,n|a...all|x|X]:
 ```
 
-Wählen Sie die **Menü-Option:** 5 - `Start` aus. Das System kopiert nun die Projektmappe und ersetzt die entsprechenden Projektnamen mit `SEBookStore`. Wenn sie ein Windows-System verwenden, wird das automatisch der Datei-Explorer mit dem Pfad '...\SEBookStore' geöffnet.
+Wählen Sie die **Menü-Option:** 5 - `Start` aus. Das System kopiert nun die Projektmappe und ersetzt die entsprechenden Projektnamen mit `SEBookStore`. Wenn sie ein Windows-System verwenden, wird automatisch der Datei-Explorer mit dem Pfad 'C:\Users\...\source\repos\SEBookStore' geöffnet.
+
+---
+
+### Schritt 5: `SEBookStore` mit der IDE öffnen
 
 Im nächsten Schritt öffnen Sie nun die Projektmappe `SEBookStore` mit der IDE (Visual Studio, VSCode oder Rider). Wenn alles erfolgreich war, sollte das Ergebnis wie folgt aussehen:
 
@@ -232,32 +286,79 @@ Im nächsten Schritt öffnen Sie nun die Projektmappe `SEBookStore` mit der IDE 
   |- SETemplate.sln
 ```
 
-Im nächsten Schritt starten Sie die Anwendung `TemplateTools.ConApp` vom . Nach dem Start von `TemplateTools.ConApp` wird folgendes Menü angezeigt:
+---
 
+### Schritt 6: Starten der Anwendung `TemplateTools.ConApp`
 
+Nach dem Start von `TemplateTools.ConApp` wird folgendes Menü angezeigt:
 
+```bash
+==============
+Template Tools
+==============
 
+Solution path: C:\Users\...\repos\SEBookStore
 
-und setzen Sie den `Target name` auf `SEBookStore`:
+[ ----] -----------------------------------------------------------------
+[    1] Path................Change solution path
+[ ----] -----------------------------------------------------------------
+[    2] Copier..............Copy this solution to a domain solution
+[    3] Preprocessor........Setting defines for project options
+[    4] CodeGenerator.......Generate code for this solution
+[    5] Synchronization.....Matches a project with the template
+[    6] Cleanup.............Deletes the temporary directories
+[-----] -----------------------------------------------------------------
+[  x|X] Exit................Exits the application
 
+Choose [n|n,n|a...all|x|X]:
+```
 
+---
 
+### Schritt 7: `Preprocessor` einstellen
 
+Wählen Sie die **Menü-Option:** 3 - `Preprocessor` aus. Anschließend wird das folgende Menü angezeigt:
 
+```bash
+========================
+Template Setting Defines
+========================
 
+Solution path: C:\Users\...\source\repos\SEBookStore
 
+[  ---] -----------------------------------------------------------------
+[    1] Path................Change preprocessor solution path
+[  ---] -----------------------------------------------------------------
+[    2] Set definition ACCOUNT_OFF               ==> ACCOUNT_ON
+[  ---] -----------------------------------------------------------------
+[    3] Set definition IDINT_ON                  ==> IDINT_OFF
+[    4] Set definition IDLONG_OFF                ==> IDLONG_ON
+[    5] Set definition IDGUID_OFF                ==> IDGUID_ON
+[  ---] -----------------------------------------------------------------
+[    6] Set definition ROWVERSION_OFF            ==> ROWVERSION_ON
+[    7] Set definition EXTERNALGUID_OFF          ==> EXTERNALGUID_ON
+[  ---] -----------------------------------------------------------------
+[    8] Set definition POSTGRES_OFF              ==> POSTGRES_ON
+[    9] Set definition SQLSERVER_OFF             ==> SQLSERVER_ON
+[   10] Set definition SQLITE_ON                 ==> SQLITE_OFF
+[  ---] -----------------------------------------------------------------
+[   11] Set definition DOCKER_OFF                ==> DOCKER_ON
+[   12] Set definition DEVELOP_ON                ==> DEVELOP_OFF
+[   13] Set definition DBOPERATION_ON            ==> DBOPERATION_OFF
+[   14] Set definition GENERATEDCODE_ON          ==> GENERATEDCODE_OFF
+[  ---] -----------------------------------------------------------------
+[   15] Start...............Start assignment process
+[-----] -----------------------------------------------------------------
+[  x|X] Exit................Exits the application
 
+Choose [n|n,n|a...all|x|X]:
+```
 
+Mit diesem Menü können die Projektparameter eingestellt werden.
 
+### Schritt 8: Entity-`Book` erstellen
 
-Nun können Sie die Projekt-Erstellung mit dem Menüpunkt 5 starten. Nach dem Vorgang hat das System einen Ordner mit dem Namen 'SEBookStore' erstellt und die einzelnen Projekte kopiert:
-
-Projekt-Erstellung
-
-Umsetzung der Aufgabe
-Öffnen Sie die Projektmappe 'SEBookStore' mit der IDE und beginnen Sie nun mit der Erstellung der Entität Book:
-
-Erstellung der Entität Book
+```bash
 namespace SEBookStore.Logic.Entities
 {
     /// <summary>
@@ -312,28 +413,36 @@ namespace SEBookStore.Logic.Entities
             return $"{Author} - {Title}";
         }
     }
+
 }
-Erstellungsrichtlinien:
+```
 
-Erstellen Sie sie Entität-Book als public partial class Book-Klasse.
-Leiten Sie die Entität-Book von EntityObject oder VersionEntityObject ab.
-Geben Sie den Tabellenname als Klassen-Attribut [Table("...")] über der Klasse an.
-Erstellen Sie alle Eigenschaften und deren Einschränkungen [MaxLength(10)].
-Geben Sie alle Index-Einschränkungen als Klassen-Attribute [Index(..., IsUnique = true)] an.
-Prüfung der Entität Book:
+**Erstellungsrichtlinien:**
 
-Klasse	Prüfung	Ergebnis	Beschreibung
-Book	Ist die Klasse als public partial class Book deklariert?	Ja	Wenn nein, tritt ein Fehler beim Verbinden von der Schnittstelle IBook mit dem Book Klasse auf.
-Book	Ist die Klasse von EntityObject oder VersionEntityObject abgeleitet?	Ja	Wenn nein, wird Book nicht als Entität erkannt.
-Book	Ist die Klasse mit dem Attribut [Table("...")] versehen?	Ja	Wenn nein, wird ein Standardnamen vergeben.
-Book	Sind die Eigenschaften mit den Attributen [MaxLength(...)] versehen?	Ja	Wenn nein, werden die Standardwerte verwendet.
-Book	Sind die Eigenschaften mit den Attributen [Required] versehen?	Ja	Wenn nein, werden die Standardwerte verwendet (Abhängig von der dotnet- Version).
-Book	Sind die Eigenschaften mit den Attributen [Index(..., IsUnique = true)] versehen?	Ja	Wenn nein, wird kein Index erstellt.
-Erstellung der Validierungen für die Entität Book
-Im nächsten Schritt implementieren Sie die Geschäftsregeln für die Entität-Book:
+- Erstellen Sie sie Entität-`Book` als `public partial class Book`-Klasse.
+- Leiten Sie die Entität-`Book` von `EntityObject` oder `VersionEntityObject` ab.
+- Geben Sie den Tabellenname als Klassen-Attribut `[Table("...")]` über der Klasse an.
+- Erstellen Sie alle Eigenschaften und deren Einschränkungen `[MaxLength(10)]`.
+- Geben Sie alle Index-Einschränkungen als Klassen-Attribute `[Index(..., IsUnique = true)]` an.
 
-Tipp: Erstellen Sie eine weiter partial-Klasse und implementieren Sie die Schnittstelle IValidatableEntity. Diese Schnittstelle ist in der Datei SETemplate.Common/Contracts/IValidatableEntity.cs definiert. Verwenden Sie als Dateinamen BookValidation.cs.
+**Prüfung der Entität-`Book`:**
 
+| Klasse | Prüfung | Ergebnis |	Beschreibung |
+|--------|---------|----------|--------------|
+| Book   | Ist die Klasse als `public partial class Book` deklariert? | Ja | Wenn nein, tritt ein Fehler beim Verbinden von der Schnittstelle `IBook` mit der `Book`-Klasse auf. |
+| Book	 | Ist die Klasse von `EntityObject` oder `VersionEntityObject` abgeleitet? | Ja |	 Wenn nein, wird `Book` nicht als Entität erkannt. |
+| Book	 | Ist die Klasse mit dem Attribut [Table("...")] versehen?	| Ja | Wenn nein, wird ein Standardnamen vergeben. |
+| Book	 | Sind die Eigenschaften mit den Attributen [MaxLength(...)] versehen?	| Ja | Wenn nein, werden die Standardwerte verwendet. |
+| Book	 | Sind die Eigenschaften mit den Attributen [Required] versehen? | Ja	| Wenn nein, werden die Standardwerte verwendet (Abhängig von der dotnet- Version). |
+| Book	 | Sind die Eigenschaften mit den Attributen [Index(..., IsUnique = true)] versehen? |Ja	 | Wenn nein, wird kein Index erstellt. |
+
+### Schritt 9: Validierung für das Entity-`Book` erstellen
+
+In diesem Schritt werden die Geschäftsregeln für die Entität-`Book` implementiert.
+
+>**Tipp:** Erstellen Sie eine weiter partial-Klasse und implementieren Sie die Schnittstelle IValidatableEntity. Diese Schnittstelle ist in der Datei SETemplate.Common/Contracts/IValidatableEntity.cs definiert. Verwenden Sie als Dateinamen BookValidation.cs.
+
+```bash
 using SEBookStore.Logic.Contracts;
 using SEBookStore.Logic.Exceptions;
 
@@ -345,7 +454,7 @@ namespace SEBookStore.Logic.Entities
     partial class Book : IValidatableEntity
     {
         /// <summary>
-        /// Validates the properties of the book entity.
+        /// Validates the properties of the book entity.o
         /// </summary>
         /// <param name="context">The context in which the validation is performed.</param>
         /// <exception cref="BusinessException">
@@ -358,7 +467,7 @@ namespace SEBookStore.Logic.Entities
         /// <item><description>The price is not between EUR 1 and EUR 10,000.</description></item>
         /// </list>
         /// </exception>
-        public void Validate(IContext context)
+        public void Validate(IContext context, EntityState entityState)
         {
             // A1
             if (CheckISBNNumber(ISBNNumber) == false)
@@ -417,23 +526,67 @@ namespace SEBookStore.Logic.Entities
         }
     }
 }
-Erstellungsrichtlinien:
+```
 
-Erstellen Sie eine weiter Klasse partial class Book : IValidatableEntity und implementieren Sie die Schnittstelle IValidatableEntity.
-Vergeben Sie für die Klasse den Dateinamen 'BookValidation.cs'.
-Implementieren Sie die Methode Validate(IContext context).
-Prüfung der Entität Book-Validation:
+**Erstellungsrichtlinien:**
 
-Klasse	Prüfung	Ergebnis	Beschreibung
-Book	Ist die Klasse als partial class Book : IValidatableEntity deklariert?	Ja	Wenn nein, wird die Validierung nicht mit der Entität-Book verbunden.
-Book	Ist die Geschäftsregel A1 implementiert?	Ja	Wenn nein, können ungültige Werte in der ISBNNummer eingetragen werden.
-Book	Ist die Geschäftsregel A2 implementiert?	Ja	Wenn nein, können Namen mit weniger als < 3 Zeichen eingetragen werden.
-Book	Ist die Geschäftsregel A3 implementiert?	Ja	Wenn nein, können Buchtiteln mit weniger als < 5 Zeichen eingetragen werden.
-Book	Ist die Geschäftsregel A4 implementiert?	Ja	Wenn nein, können ungültige Erscheinungsjahre eingetragen werden.
-Book	Ist die Geschäftsregel A5 implementiert?	Ja	Wenn nein, können ungültige Preise eingetragen werden.
-Code-Generierung
-Voraussetzungen für die Code-Generierung:
+- Erstellen Sie eine weiter Klasse `partial class Book : IValidatableEntity` und implementieren Sie die Schnittstelle `IValidatableEntity`.
+- Vergeben Sie für die Klasse den Dateinamen 'BookValidation.cs'.
+- Implementieren Sie die Methode Validate(IContext context).
 
-Die Entität Book ist erstellt und alle Prüfschritte haben das Ergebniss 'Ja'.
-Die Entität Book ist validiert und alle Prüfschritte haben das Ergebnis 'Ja'.
-Die Projektmappe SEBookStore kann fehlerfrei erstellt werden.
+**Prüfung der Entität-`Book`-Validation:**
+
+| Klasse | Prüfung | Ergebnis |	Beschreibung |
+|--------|---------|----------|--------------|
+| Book	 | Ist die Klasse als `partial class Book : IValidatableEntity` deklariert? | Ja |	Wenn nein, wird die Validierung nicht mit der Entität-`Book` verbunden. |
+| Book	 | Ist die Geschäftsregel A1 implementiert?	| Ja | Wenn nein, können ungültige Werte in der ISBNNummer eingetragen werden. |
+| Book	 | Ist die Geschäftsregel A2 implementiert?	| Ja | Wenn nein, können Namen mit weniger als < 3 Zeichen eingetragen werden. |
+| Book	 | Ist die Geschäftsregel A3 implementiert?	| Ja | Wenn nein, können Buchtiteln mit weniger als < 5 Zeichen eingetragen werden. |
+| Book	 | Ist die Geschäftsregel A4 implementiert?	| Ja | Wenn nein, können ungültige Erscheinungsjahre eingetragen werden. |
+| Book	 | Ist die Geschäftsregel A5 implementiert?	| Ja | Wenn nein, können ungültige Preise eingetragen werden. |
+
+---
+
+### Schritt 10: Starten der `CodeGenerierung`
+
+Bevor mit der Code-Generierung begonnen werden kann, müssen die folgenden Schritte durchgeführt werden:
+
+- Die Entität-`Book` ist erstellt und alle Prüfschritte haben das Ergebniss 'Ja'.
+- Die Entität-`Book` ist validiert und alle Prüfschritte haben das Ergebnis 'Ja'.
+- Die Projektmappe `SEBookStore` kann fehlerfrei erstellt werden.
+
+Starten das Programm `TemplateTools.ConApp` und wählen Sie die **Menü-Option:** 4 - `CodeGenerator` aus. Anschließend wird das folgende Menü angezeigt:
+
+```bash
+=======================
+Template Code Generator
+=======================
+
+Solution path:                    C:\Users\...\repos\SEBookStore
+---------------------------------
+Write generated source into:      False
+Write info header into source:    True
+Delete empty folders in the path: True
+Exclude generated files from GIT: True
+
+[-----] -----------------------------------------------------------------
+[    1] Generation file.....Change generation file option
+[    2] Add info header.....Change add info header option
+[    3] Delete folders......Change delete empty folders option
+[    4] Exclude files.......Change the exclusion of generated files from GIT
+[    5] Source path.........Change the source solution path
+[-----] -----------------------------------------------------------------
+[    6] Compile.............Compile logic project
+[    7] Delete files........Delete generated files
+[    8] Delete folders......Delete empty folders in the path
+[    9] Start...............Start code generation
+[-----] -----------------------------------------------------------------
+[  x|X] Exit................Exits the application
+
+Choose [n|n,n|a...all|x|X]:
+```
+
+Bevor Sie mit der `CodeGenerierung` beginnen, können einige Einstellungen vorgenommen werden. Sie finden die Beschreibung in der Dokumentation für [**SE-Template**](https://github.com/leoggehrer/SETemplate).
+
+Nachdem die Einstellung vorgenommen wurde, wählen Sie die **Menü-option:** 9 - `Start` aus. Die `CodeGenerierung` startet und hat folgende Code-Teile generiert:
+

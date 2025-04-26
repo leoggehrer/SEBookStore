@@ -10,9 +10,11 @@ public partial class BookWindow : Window
     {
         InitializeComponent();
 
+#if GENERATEDCODE_ON
         if (DataContext is ViewModels.BookViewModel bvm)
         {
             bvm.CloseAction = () => Close();
         }
+#endif
     }
 }
