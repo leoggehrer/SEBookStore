@@ -9,7 +9,7 @@
   - [Datenmodell und Datenbank](#datenmodell-und-datenbank)
     - [Definition von ***Book***](#definition-von-book)
   - [Aufgaben](#aufgaben)
-    - [Business-Logik](#business-logik)
+    - [Geschäftsregeln](#geschäftsregeln)
     - [Prüfung der ISBN-Nummern](#prüfung-der-isbn-nummern)
       - [Beispiele](#beispiele)
   - [Datenimport](#datenimport)
@@ -24,6 +24,12 @@
     - [Schritt 8: Entity-`Book` erstellen](#schritt-8-entity-book-erstellen)
     - [Schritt 9: Validierung für das Entity-`Book` erstellen](#schritt-9-validierung-für-das-entity-book-erstellen)
     - [Schritt 10: Starten der `CodeGenerierung`](#schritt-10-starten-der-codegenerierung)
+  - [Erweiterungen nach der CodeGenerierung](#erweiterungen-nach-der-codegenerierung)
+    - [Erweiterung: Datenimport](#erweiterung-datenimport)
+    - [Erweiterung MVVMApp](#erweiterung-mvvmapp)
+      - [Erweiterung MVVMApp-Listen-Ansicht](#erweiterung-mvvmapp-listen-ansicht)
+      - [Erweiterung MVVMApp-Einzel-Ansicht](#erweiterung-mvvmapp-einzel-ansicht)
+    - [Testen der MVVMApp](#testen-der-mvvmapp)
 
 ---
 
@@ -65,9 +71,9 @@ Das Datenmodell für ***BookStore*** hat folgenden Aufbau:
 
 ## Aufgaben  
 
-### Business-Logik  
+### Geschäftsregeln  
 
-Das System muss einige Geschäftsregeln umsetzen. Diese Regeln werden im Backend implementiert und müssen mit UnitTests überprüft werden.
+Das System muss einige Geschäftsregeln umsetzen. Diese Regeln werden im **Backend** implementiert und müssen mit **UnitTests** überprüft werden.
 
 > **HINWEIS:** Unter **Geschäftsregeln** (Business-Rules) versteht man **elementare technische Sachverhalte** im Zusammenhang mit Computerprogrammen. Mit *WENN* *DANN* Scenarien werden die einzelnen Regeln beschrieben.  
 
@@ -75,20 +81,20 @@ Für den ***SEBookStore*** sind folgende Regeln definiert:
 
 | Rule | Subject | Type   | Operation | Description | Note |
 |------|---------|--------|-----------|-------------|------|
-|**A1**| Book    |        |           |             |      |
-|      |         |**WENN**|           | eine *Book* erstellt oder bearbeitet wird, |  |
-|      |         |**DANN**|           | muss die `ISBNNumber` festgelegt sein und gültig sein (die Regen finden Sie im Abschnitt **Prüfung der ISBN-Nummern**. | |
-|**A2**| Book    |        |           |             |      |
-|      |         |**WENN**|           | eine *Book* erstellt oder bearbeitet wird, |  |
+|**A1**| `Book`  |        |           |             |      |
+|      |         |**WENN**|           | eine `Book` erstellt oder bearbeitet wird, |  |
+|      |         |**DANN**|           | muss die `ISBNNumber` festgelegt sein und gültig sein (die Regeln finden Sie im Abschnitt **Prüfung der ISBN-Nummern**). | |
+|**A2**| `Book`  |        |           |             |      |
+|      |         |**WENN**|           | eine `Book` erstellt oder bearbeitet wird, |  |
 |      |         |**DANN**|           | muss der `Author` festgelegt sein und mindestens 3 Zeichen lang sein. | |
-|**A3**| Book    |        |           |             |      |
-|      |         |**WENN**|           | eine *Book* erstellt oder bearbeitet wird, |  |
+|**A3**| `Book`  |        |           |             |      |
+|      |         |**WENN**|           | eine `Book` erstellt oder bearbeitet wird, |  |
 |      |         |**DANN**|           | muss der `Title` festgelegt sein und mindestens 5 Zeichen lang sein. | |
-|**A4**| Book    |        |           |             |      |
-|      |         |**WENN**|           | eine *Book* erstellt oder bearbeitet wird, |  |
+|**A4**| `Book`  |        |           |             |      |
+|      |         |**WENN**|           | eine `Book` erstellt oder bearbeitet wird, |  |
 |      |         |**DANN**|           | muss die `YearOfRelease` festgelegt und im im Bereich von 1900 bis aktuelles Datum + 1 Jahr sein. | |
-|**A5**| Book    |        |           |             |      |
-|      |         |**WENN**|           | eine *Book* erstellt oder bearbeitet wird, |  |
+|**A5**| `Book`  |        |           |             |      |
+|      |         |**WENN**|           | eine `Book` erstellt oder bearbeitet wird, |  |
 |      |         |**DANN**|           | muss der `Price` festgelegt und im Bereich von 1 EUR bis 10.000 EUR sein. | |
 
 > **Hinweis:** Falls einer der Geschäftsregeln nicht erfüllt ist, muss eine **BusinessException** mit einer entsprechenden Fehlermeldung (in Englisch) geworfen werden.
@@ -609,3 +615,386 @@ Nachdem die Einstellung vorgenommen wurde, wählen Sie die **Menü-option:** 9 -
 
 > **HINWEIS:** Die **Dateinamen** gelten nur für den Mode *Write generated source into: Single files*.
 
+## Erweiterungen nach der CodeGenerierung
+
+**Erweiterungsrichtlinien:**
+
+- Wenn eine Klasse Members erweitert wird, dann erfolgt dies in einer `partial class Name`.
+- Zusätzlich muss die Code-Generierung geprüft werden und mit der Konstanten `GENERATEDCODE_ON` eingeschaltet werden.
+- Der folgende Programmausschnitt zeigt eine mögliche Erweiterung:
+
+```csharp
+#if GENERATEDCODE_ON
+namespace SEBookStore.MVVMApp.Models
+{
+    partial class Book
+    {
+        public override string ToString()
+        {
+            return $"{Author} {Title}";
+        }
+    }
+}
+#endif
+```
+
+### Erweiterung: Datenimport
+
+Für den Datenimport erweitern wir im Modul `SEBookStore.ConApp` die Klasse `Program`. Zu diesem Zweck wird eine partiele Klasse mit dem Dateinamen 'ProgramImport.cs' erstellt. In dieser Klasse erfolgt das Eomnlesen der csv-Daten und die Auswertung des Importes:
+
+```csharp
+#if GENERATEDCODE_ON
+using SEBookStore.Logic.Exceptions;
+
+namespace SEBookStore.ConApp
+{
+    /// <summary>
+    /// This partial class of Program contains the ImportData method, which imports book data from a CSV file into the database.
+    /// </summary>
+    partial class Program
+    {
+        /// <summary>
+        /// Imports book data from a CSV file located in the "Data" directory.
+        /// Each line in the CSV file represents a book with its details separated by semicolons.
+        /// The method reads the file, parses the data, and adds each book to the database.
+        /// </summary>
+        /// <remarks>
+        /// The CSV file is expected to have the following columns in order:
+        /// ISBNNumber, Author, Description, Price, Title, YearOfRelease.
+        /// </remarks>
+        /// <exception cref="BusinessException">Thrown when a business rule is violated while adding a book to the database.</exception>
+        /// <exception cref="Exception">Thrown for any other errors during the import process.</exception>
+        static partial void ImportData()
+        {
+            int index = 0;
+            var filePath = Path.Combine("Data", "book_dataset.csv");
+            var books = File.ReadAllLines(filePath).Skip(1)
+                .Select(line => line.Split(';'))
+                .Select(parts => new Logic.Entities.Book
+                {
+                    ISBNNumber = parts[0],
+                    Author = parts[1],
+                    Description = parts[2],
+                    Price = double.Parse(parts[3]),
+                    Title = parts[4],
+                    YearOfRelease = int.Parse(parts[5])
+                });
+
+            foreach (var book in books)
+            {
+                using var context = CreateContext();
+
+                try
+                {
+                    index++;
+                    context.BookSet.Add(book);
+                    context.SaveChanges();
+                }
+                catch (BusinessException ex)
+                {
+                    Console.WriteLine($"Error on line {index} {book}: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error on line {index}: {ex.InnerException}");
+                }
+            }
+        }
+    }
+}
+#endif
+```
+
+Das Programm `SEBookStore.ConApp` kann nun gestartet werden. Anschließend führen Sie die Auswahl: **InitDatabase...1** durch - der Import startet. In der Konsole werden die Fehler vom Import ausgegeben:
+
+```bash
+SEBookStore
+==========================================
+InitDatabase             ....1
+
+Exit...............x
+
+Your choice: 1
+Error on line 3 Julie Watts - Ashes and Hope: Invalid ISBN number
+Error on line 5 Sa - Paris in Spring: The character length of the author must be at least 3 characters long.
+Error on line 7 Irene Arnold - Star: The character length of the title must be at least 5 characters long.
+Error on line 18 Jorge Dixon - The Dreammaker: The publication must be between 1900 and 2026.
+Error on line 21 Kara Rhodes - Tastes of Tuscany: The publication must be between 1900 and 2026.
+Error on line 25 Moses Knight - The Painter AI: The price must be between EUR 1 and EUR 10,000.
+Error on line 27 Stacey Parks - Melody of Me: The price must be between EUR 1 and EUR 10,000.
+Error on line 31: Microsoft.Data.Sqlite.SqliteException (0x80004005): SQLite Error 19: 'UNIQUE constraint failed: Books.ISBNNumber'.
+   at Microsoft.Data.Sqlite.SqliteException.ThrowExceptionForRC(Int32 rc, sqlite3 db)
+   at Microsoft.Data.Sqlite.SqliteDataReader.NextResult()
+   at Microsoft.Data.Sqlite.SqliteCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.Sqlite.SqliteCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+
+Continue with Enter...
+```
+
+### Erweiterung MVVMApp
+
+In der MVVMApp sind im Ordner `ViewModel` die beiden Klassen `BooksViewModel` und `BookViewModel` generiert worden. Das `BooksViewModel` ist für die Listen-Ansicht mit den Operationen `Add`, `Edit` und `Delete` generiert worden. Das `BookViewModel` dient für die Einzelbearbeitung `Add` und `Edit`. Allerdings müssen für die Verwendung noch ein paar Anpassungen durchgeführt werden.
+
+#### Erweiterung MVVMApp-Listen-Ansicht
+
+> **HINWEIS:** Für die Entwicklung von Ansichten wird die Verwendung von `UserControls` empfohlen. Diese unterstützen die Wiederverwendung auf der Ebene von Ansichten.
+
+Erstellung der Listen-Ansicht mit einem `DataGrid`-Control  im Ordner `Views`:
+
+> Fügen Sie mit der IDE ein `Avalonia UserControl` mit dem Namen **BooksUserControl** hinzu.
+
+```xml
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SEBookStore.MVVMApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:BooksViewModel"
+             x:Class="SEBookStore.MVVMApp.Views.BooksUserControl">
+
+    <UserControl.DataContext>
+		<vm:BooksViewModel></vm:BooksViewModel>
+	</UserControl.DataContext>
+
+	<Grid Margin="10">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+		</Grid.RowDefinitions>
+
+		<Grid Grid.Column="0" Grid.Row="0" Margin="0 0 0 10">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="35"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="35"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+
+			<!-- Filter-Textbox nimmt die gesamte verfügbare Breite ein -->
+			<Button Grid.Column="0"	Grid.Row="0"
+				Background="Transparent"
+				Command="{Binding AddItemCommand}">
+				<StackPanel Orientation="Horizontal" Width="20" Height="20">
+					<Image Source="/Assets/add.png"></Image>
+				</StackPanel>
+			</Button>
+
+			<TextBox Grid.Column="1" Grid.Row="0"
+				Watermark="Geben Sie hier eine Filter ein"
+				Text="{Binding Filter}"
+				HorizontalAlignment="Stretch" />
+
+			<!-- Button mit fester Breite -->
+			<Button	Grid.Column="2"	Grid.Row="0"
+				Background="Transparent"
+				Command="{Binding LoadModelsCommand}">
+				<StackPanel Orientation="Horizontal" Width="20" Height="20">
+					<Image Stretch="" Source="/Assets/reload.png"></Image>
+				</StackPanel>
+			</Button>
+		</Grid>
+
+		<DataGrid Grid.Column="0" Grid.Row="1"
+			x:Name="dataGrid"
+			BorderThickness="1"
+			BorderBrush="Gray"
+			IsReadOnly="True"
+			ItemsSource="{Binding Models}"
+			SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+			AutoGenerateColumns="False">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Author" Binding="{Binding Author}" />
+				<DataGridTextColumn Header="Titel" Binding="{Binding Title}" />
+				<DataGridTemplateColumn Width="Auto" Header="Actions">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Button
+									Background="Transparent"
+									Command="{Binding #dataGrid.((vm:BooksViewModel)DataContext).EditItemCommand}"
+									CommandParameter="{Binding}">
+									<StackPanel Orientation="Horizontal" Width="20" Height="20">
+										<Image Stretch="" Source="/Assets/edit.png"></Image>
+									</StackPanel>
+								</Button>
+								<Button
+									Background="Transparent"
+									Command="{Binding #dataGrid.((vm:BooksViewModel)DataContext).DeleteItemCommand}"
+									CommandParameter="{Binding}">
+									<StackPanel Orientation="Horizontal" Width="20" Height="20">
+										<Image Stretch="" Source="/Assets/delete.png"></Image>
+									</StackPanel>
+								</Button>
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+
+</UserControl>
+```
+
+> **HINWEIS:** Sie können die Vorlage `ItemsUserControl` aus dem Ordner `Template` kopieren und die `DataGridColumns` anpassen.
+
+Im nächsten Schritt fügen wir das `BooksUserControl` in das `MainWindow` ein. Das `MainWindow` wird wie im folgenden Abschnitt entsprechend angepasst:
+
+```xml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:SEBookStore.MVVMApp.ViewModels"
+		xmlns:views="using:SEBookStore.MVVMApp.Views"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
+        x:Class="SEBookStore.MVVMApp.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+		Width="1000"
+		Height="600"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="BookStore">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<TabControl Margin="5">
+		<TabItem Header="Bücher">
+			<views:BooksUserControl />
+		</TabItem>
+	</TabControl>	
+
+</Window>
+```
+
+#### Erweiterung MVVMApp-Einzel-Ansicht
+
+Erstellung der Einzel-Ansicht mit einem `Grid`-Container  im Ordner `Views`:
+
+> Fügen Sie mit der IDE ein `Avalonia UserControl` mit dem Namen **BookUserControl** hinzu.
+
+```xml
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:SEBookStore.MVVMApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="460" d:DesignHeight="320"
+             x:Class="SEBookStore.MVVMApp.Views.BookUserControl"
+	 		 x:DataType="vm:BookViewModel">
+
+	<UserControl.DataContext>
+		<vm:BookViewModel />
+	</UserControl.DataContext>
+
+	<Grid Margin="20 10 20 10">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+		</Grid.RowDefinitions>
+
+		<Label Grid.Row="0" Grid.Column="0" Content="ISBN:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ISBNNumber}" Margin="0 10 10 0"/>
+
+		<Label Grid.Row="1" Grid.Column="0" Content="Autor:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Author}" Margin="0 10 10 0"/>
+
+		<Label Grid.Row="2" Grid.Column="0" Content="Titel:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Title}" Margin="0 10 10 0"/>
+
+		<Label Grid.Row="3" Grid.Column="0" Content="Beschreibung:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Description}" Margin="0 10 10 0"/>
+
+		<Label Grid.Row="4" Grid.Column="0" Content="Erscheinung:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding YearOfRelease}" Margin="0 10 10 0"/>
+
+		<Label Grid.Row="5" Grid.Column="0" Content="Preis:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Price}" Margin="0 10 10 0"/>
+
+		<StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+			<Button Content="Abbrechen" Command="{Binding CancelCommand}" Width="120" HorizontalContentAlignment="Center" Margin="0 10 10 0"/>
+			<Button Content="Speichern" Command="{Binding SaveCommand}" Width="120" HorizontalContentAlignment="Center" Margin="0 10 10 0"/>
+		</StackPanel>
+	</Grid>
+
+</UserControl>
+```
+
+> **HINWEIS:** Sie können die Vorlage `ItemUserControl` aus dem Ordner `Template` kopieren und die `GridColumns` und `GridRows` entsprechend anpassen.
+
+Das `ItemUserControl` benötigt nun ein `Avalonia Window` damit dieses Element dem Benutzer angezeigt werden kann. 
+
+> Fügen Sie mit der IDE ein `Avalonia Window` mit dem Namen **BookWindow** hinzu.
+
+```xml
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="using:SEBookStore.MVVMApp.ViewModels"
+		xmlns:views="using:SEBookStore.MVVMApp.Views"
+        mc:Ignorable="d"
+		d:DesignWidth="800"
+		d:DesignHeight="350"
+		Width="800"
+		Height="350"
+        x:Class="SEBookStore.MVVMApp.Views.BookWindow"
+		x:DataType="vm:BookViewModel"
+		WindowStartupLocation="CenterOwner"
+        Title="Buch">
+
+	<Window.DataContext>
+		<vm:BookViewModel/>
+	</Window.DataContext>
+
+	<views:BookUserControl DataContext="{Binding}">
+	</views:BookUserControl>
+
+</Window>
+```
+
+Im letzten Schritt muss noch das `BooksViewModel` im Ordner `ViewModels` angepasst werden. Dazu muss eine partielle Klasse erstellt werden und die abstrakten Methoden definiert werden. Der Dateiname ist *BooksViewModelEx.cs*.
+
+```csharp
+#if GENERATEDCODE_ON
+using Avalonia.Controls;
+using SEBookStore.MVVMApp.Models;
+
+namespace SEBookStore.MVVMApp.ViewModels
+{
+    partial class BooksViewModel
+    {
+        protected override GenericItemViewModel<Book> CreateViewModel()
+        {
+            return new BookViewModel();
+        }
+
+        protected override Window CreateWindow()
+        {
+            return new Views.BookWindow();
+        }
+    }
+}
+#endif
+```
+
+### Testen der MVVMApp
+
+Damit die Anwendung gestartet werden kann, muss ein MultiStart eingerichtet werden. Für die Ausführung der `MVVMApp` muss zusätzlich die `WebApi` gestartet werden. Die basis-URL ist in der `appsettings.Development.json` konfiguriert. Als `Default`-Wert ist der Wert *https://localhost:7074/api/* eingestellt.
+
+**Viel Spaß**
