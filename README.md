@@ -3,27 +3,27 @@
 
 **Inhaltsverzeichnis:**
 
-1. [Lehrziele](#lehrziele)
-2. [Einleitung](#einleitung)
-3. [Datenmodell und Datenbank](#datenmodell-und-datenbank)
-   - [Definition von ***Book***](#definition-von-book)
-4. [Aufgaben](#aufgaben)
-   - [Business-Logik](#business-logik)
-   - [Prüfung der ISBN-Nummern](#prufung-der-ISBN-nummern)
-   - [Beispiele](#beispiele)
-5. [Datenimport](#datenimport)      
-6. [Umsetzung der Aufgabe mit dem SETemplate](#umsetzung-der-aufgabe-mit-dem-SETemplate)
-   - [Schritt 1: Repository klonen](#schritt-1-repository-klonen)
-   - [Schritt 2: `SETemplate` mit der IDE öffnen](#schritt-2-SETemplate-mit-der-IDE-offnen)
-   - [Schritt 3: Starten der Anwendung `TemplateTools.ConApp`](#schritt-3-starten-der-anwendung-TemplateTools.ConApp)
-   - [Schritt 4: SETemplate  kopieren =>  SEBookStore](#schritt-4-SETemplate-kopieren-SEBookStore)
-   - [Schritt 5: `SEBookStore` mit der IDE öffnen](#schritt-5-SEBookStore-mit-der-IDE-offnen)
-   - [Schritt 6: Starten der Anwendung `TemplateTools.ConApp`](#schritt-6-starten-der-anwendung-TemplateTools.ConApp)
-   - [Schritt 7: `Preprocessor` einstellen](#schritt-7-preprocessor-einstellen)
-   - [Schritt 8: Entity-`Book` erstellen](#schritt-8-entity-book-erstellen)
-   - [Schritt 9: Validierung für das Entity-`Book` erstellen](#schritt-9-validierung-fur-das-entity-book-erstellen)
-   - [Schritt 10: Starten der `CodeGenerierung`](#schritt-10-starten-der-codegenerierung)
-   - [Schritt 2: `SETemplate` mit der IDE öffnen](#schritt-2-SETemplate-mit-der-IDE-offnen)
+- [BookStore](#bookstore)
+  - [Lehrziele](#lehrziele)
+  - [Einleitung](#einleitung)
+  - [Datenmodell und Datenbank](#datenmodell-und-datenbank)
+    - [Definition von ***Book***](#definition-von-book)
+  - [Aufgaben](#aufgaben)
+    - [Business-Logik](#business-logik)
+    - [Prüfung der ISBN-Nummern](#prüfung-der-isbn-nummern)
+      - [Beispiele](#beispiele)
+  - [Datenimport](#datenimport)
+  - [Umsetzung der Aufgabe mit dem SETemplate](#umsetzung-der-aufgabe-mit-dem-setemplate)
+    - [Schritt 1: Repository klonen](#schritt-1-repository-klonen)
+    - [Schritt 2: `SETemplate` mit der IDE öffnen](#schritt-2-setemplate-mit-der-ide-öffnen)
+    - [Schritt 3: Starten der Anwendung `TemplateTools.ConApp`](#schritt-3-starten-der-anwendung-templatetoolsconapp)
+    - [Schritt 4: `SETemplate` kopieren =\> `SEBookStore`](#schritt-4-setemplate-kopieren--sebookstore)
+    - [Schritt 5: `SEBookStore` mit der IDE öffnen](#schritt-5-sebookstore-mit-der-ide-öffnen)
+    - [Schritt 6: Starten der Anwendung `TemplateTools.ConApp`](#schritt-6-starten-der-anwendung-templatetoolsconapp)
+    - [Schritt 7: `Preprocessor` einstellen](#schritt-7-preprocessor-einstellen)
+    - [Schritt 8: Entity-`Book` erstellen](#schritt-8-entity-book-erstellen)
+    - [Schritt 9: Validierung für das Entity-`Book` erstellen](#schritt-9-validierung-für-das-entity-book-erstellen)
+    - [Schritt 10: Starten der `CodeGenerierung`](#schritt-10-starten-der-codegenerierung)
 
 ---
 
@@ -102,7 +102,7 @@ Die **Prüfziffer (10. Ziffer)** der ISBN-Nummer wird so berechnet:
 3. Teile die Summe ganzzahlig durch 11.  
 4. Der **Rest** ist die Prüfziffer. Falls der Rest 10 ist, ist die Prüfziffer **„X“**.
 
-#### Beispiele:
+#### Beispiele
 
 1. **ISBN 3-499-13599-[?]**  
    `3·1 + 4·2 + 9·3 + 9·4 + 1·5 + 3·6 + 5·7 + 9·8 + 9·9 = 285`  
@@ -130,7 +130,7 @@ Erstellen Sie ein Konsolenprogramm welches die Datenbank erzeugt und die beigele
 
 ## Umsetzung der Aufgabe mit dem SETemplate
 
-Mit dem `SETemplate` können Sie die Aufgabenstellung in wenigen Schritten umsetzen. 
+Mit dem `SETemplate` können Sie die Aufgabenstellung in wenigen Schritten umsetzen.
 
 **Umsetzungstabelle:**
 
@@ -156,7 +156,7 @@ cd SETemplate
 
 ### Schritt 2: `SETemplate` mit der IDE öffnen
 
-Öffnen Sie das `SETemplate` mit der IDE (Visual Studio 2022, Rider oder Visual Studio Code). 
+Öffnen Sie das `SETemplate` mit der IDE (Visual Studio 2022, Rider oder Visual Studio Code).
 
 ### Schritt 3: Starten der Anwendung `TemplateTools.ConApp`
 
@@ -413,7 +413,6 @@ namespace SEBookStore.Logic.Entities
             return $"{Author} - {Title}";
         }
     }
-
 }
 ```
 
@@ -427,14 +426,14 @@ namespace SEBookStore.Logic.Entities
 
 **Prüfung der Entität-`Book`:**
 
-| Klasse | Prüfung | Ergebnis |	Beschreibung |
+| Klasse | Prüfung | Ergebnis | Beschreibung |
 |--------|---------|----------|--------------|
 | Book   | Ist die Klasse als `public partial class Book` deklariert? | Ja | Wenn nein, tritt ein Fehler beim Verbinden von der Schnittstelle `IBook` mit der `Book`-Klasse auf. |
-| Book	 | Ist die Klasse von `EntityObject` oder `VersionEntityObject` abgeleitet? | Ja |	 Wenn nein, wird `Book` nicht als Entität erkannt. |
-| Book	 | Ist die Klasse mit dem Attribut [Table("...")] versehen?	| Ja | Wenn nein, wird ein Standardnamen vergeben. |
-| Book	 | Sind die Eigenschaften mit den Attributen [MaxLength(...)] versehen?	| Ja | Wenn nein, werden die Standardwerte verwendet. |
-| Book	 | Sind die Eigenschaften mit den Attributen [Required] versehen? | Ja	| Wenn nein, werden die Standardwerte verwendet (Abhängig von der dotnet- Version). |
-| Book	 | Sind die Eigenschaften mit den Attributen [Index(..., IsUnique = true)] versehen? |Ja	 | Wenn nein, wird kein Index erstellt. |
+| Book  | Ist die Klasse von `EntityObject` oder `VersionEntityObject` abgeleitet? | Ja |  Wenn nein, wird `Book` nicht als Entität erkannt. |
+| Book  | Ist die Klasse mit dem Attribut [Table("...")] versehen? | Ja | Wenn nein, wird ein Standardnamen vergeben. |
+| Book  | Sind die Eigenschaften mit den Attributen [MaxLength(...)] versehen? | Ja | Wenn nein, werden die Standardwerte verwendet. |
+| Book  | Sind die Eigenschaften mit den Attributen [Required] versehen? | Ja | Wenn nein, werden die Standardwerte verwendet (Abhängig von der dotnet- Version). |
+| Book  | Sind die Eigenschaften mit den Attributen [Index(..., IsUnique = true)] versehen? |Ja  | Wenn nein, wird kein Index erstellt. |
 
 ### Schritt 9: Validierung für das Entity-`Book` erstellen
 
@@ -536,14 +535,14 @@ namespace SEBookStore.Logic.Entities
 
 **Prüfung der Entität-`Book`-Validation:**
 
-| Klasse | Prüfung | Ergebnis |	Beschreibung |
+| Klasse | Prüfung | Ergebnis | Beschreibung |
 |--------|---------|----------|--------------|
-| Book	 | Ist die Klasse als `partial class Book : IValidatableEntity` deklariert? | Ja |	Wenn nein, wird die Validierung nicht mit der Entität-`Book` verbunden. |
-| Book	 | Ist die Geschäftsregel A1 implementiert?	| Ja | Wenn nein, können ungültige Werte in der ISBNNummer eingetragen werden. |
-| Book	 | Ist die Geschäftsregel A2 implementiert?	| Ja | Wenn nein, können Namen mit weniger als < 3 Zeichen eingetragen werden. |
-| Book	 | Ist die Geschäftsregel A3 implementiert?	| Ja | Wenn nein, können Buchtiteln mit weniger als < 5 Zeichen eingetragen werden. |
-| Book	 | Ist die Geschäftsregel A4 implementiert?	| Ja | Wenn nein, können ungültige Erscheinungsjahre eingetragen werden. |
-| Book	 | Ist die Geschäftsregel A5 implementiert?	| Ja | Wenn nein, können ungültige Preise eingetragen werden. |
+| Book  | Ist die Klasse als `partial class Book : IValidatableEntity` deklariert? | Ja | Wenn nein, wird die Validierung nicht mit der Entität-`Book` verbunden. |
+| Book  | Ist die Geschäftsregel A1 implementiert? | Ja | Wenn nein, können ungültige Werte in der ISBNNummer eingetragen werden. |
+| Book  | Ist die Geschäftsregel A2 implementiert? | Ja | Wenn nein, können Namen mit weniger als < 3 Zeichen eingetragen werden. |
+| Book  | Ist die Geschäftsregel A3 implementiert? | Ja | Wenn nein, können Buchtiteln mit weniger als < 5 Zeichen eingetragen werden. |
+| Book  | Ist die Geschäftsregel A4 implementiert? | Ja | Wenn nein, können ungültige Erscheinungsjahre eingetragen werden. |
+| Book  | Ist die Geschäftsregel A5 implementiert? | Ja | Wenn nein, können ungültige Preise eingetragen werden. |
 
 ---
 
@@ -564,7 +563,7 @@ Template Code Generator
 
 Solution path:                    C:\Users\...\repos\SEBookStore
 ---------------------------------
-Write generated source into:      False
+Write generated source into:      Single files
 Write info header into source:    True
 Delete empty folders in the path: True
 Exclude generated files from GIT: True
@@ -589,4 +588,24 @@ Choose [n|n,n|a...all|x|X]:
 Bevor Sie mit der `CodeGenerierung` beginnen, können einige Einstellungen vorgenommen werden. Sie finden die Beschreibung in der Dokumentation für [**SE-Template**](https://github.com/leoggehrer/SETemplate).
 
 Nachdem die Einstellung vorgenommen wurde, wählen Sie die **Menü-option:** 9 - `Start` aus. Die `CodeGenerierung` startet und hat folgende Code-Teile generiert:
+
+| Module  | Ordner        | Komponente         | Dateiname                     | Beschreibung                                   |
+|---------|---------------|--------------------|-------------------------------|------------------------------------------------|
+| Common  | Contracts     | `IBook`            | Book.cs                       | Die Schnittstelle für das Entity-`Book` mit `CopyProperties(...)`. |
+| Logic   | Entities      | `Book`             | BookGeneration.cs             | Die Schnittstelle wird mit dem Entity-`Book` verbunden. |
+| Logic   | DataContext   | `BookSet`          | BookSet.cs                    | Die `Set`-Management Klasse für den Zugriff. |
+| Logic   | Contracts     | `IBookSet`         | IBookSet.cs                   | Die Schnittstelle für die `BookSet`-Klasse. |
+| Logic   | DataContext   | `ProjectDbContext` | ProjectDbContextGeneration.cs | Enthält die Eigenschaften `DbBookSet<Book>`, `BookSet` und die entsprechenden Methoden. |
+| Logic   | Contracts     | `IContext`         | IContextGeneration.cs         | Die Schnittstelle für den öffentlichen Zugriff das `BookSet`. |
+| WebApi  | Models        | `Book`             | Book.cs                       | Das Model-`Book` für die `WebApi`-Übertragung. |
+| WebApi  | Models        | `BookEdit`         | BookEdit.cs                   | Das Model-`BookEdit`für die `WebApi`-Übertragung. |
+| WebApi  | Models        | `Book`             | BookInheritance.cs            | Eine `partial`-Klasse in welche die Ableitung des Models definiert ist. |
+| WebApi  | Controllers   | `BooksController`  | BooksController.cs            | Die standard Implementierung der `CRUD`-Operationen für das Entity `Book` |
+| WebApi  | Controllers   | `ContextAccessor`  | ContextAccessorGeneration.cs  | Die Methode für den Zugriff auf die `BookSet`-Eigenschaft in der Logik. |
+| MVVMApp | Models        | `Book`             | Book.cs                       | Das Model-`Book` für die `WebApi`-Übertragung. |
+| MVVMApp | Models        | `Book`             | BookInheritance.cs            | Eine `partial`-Klasse in welche die Ableitung des Models definiert ist. |
+| MVVMApp | ViewModels    | `BooksViewModel`   | BooksViewModel.cs             | Ein `ViewModel` für die `Book`-Tabellen-Ansicht. |
+| MVVMApp | ViewModels    | `BookViewModel`    | BookViewModel.cs              | Ein `ViewModel` für die `Book`-Einzel-Ansicht. |
+
+> **HINWEIS:** Die **Dateinamen** gelten nur für den Mode *Write generated source into: Single files*.
 
