@@ -756,87 +756,87 @@ Erstellung der Listen-Ansicht mit einem `DataGrid`-Control  im Ordner `Views`:
              x:Class="SEBookStore.MVVMApp.Views.BooksUserControl">
 
     <UserControl.DataContext>
-		<vm:BooksViewModel></vm:BooksViewModel>
-	</UserControl.DataContext>
+        <vm:BooksViewModel></vm:BooksViewModel>
+    </UserControl.DataContext>
 
-	<Grid Margin="10">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition></ColumnDefinition>
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-		</Grid.RowDefinitions>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
 
-		<Grid Grid.Column="0" Grid.Row="0" Margin="0 0 0 10">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="35"></ColumnDefinition>
-				<ColumnDefinition Width="*"></ColumnDefinition>
-				<ColumnDefinition Width="35"></ColumnDefinition>
-			</Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0" Margin="0 0 0 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="35"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-			<!-- Filter-Textbox nimmt die gesamte verfügbare Breite ein -->
-			<Button Grid.Column="0"	Grid.Row="0"
-				Background="Transparent"
-				Command="{Binding AddItemCommand}">
-				<StackPanel Orientation="Horizontal" Width="20" Height="20">
-					<Image Source="/Assets/add.png"></Image>
-				</StackPanel>
-			</Button>
+            <!-- Filter-Textbox nimmt die gesamte verfügbare Breite ein -->
+            <Button Grid.Column="0"    Grid.Row="0"
+                Background="Transparent"
+                Command="{Binding AddItemCommand}">
+                <StackPanel Orientation="Horizontal" Width="20" Height="20">
+                    <Image Source="/Assets/add.png"></Image>
+                </StackPanel>
+            </Button>
 
-			<TextBox Grid.Column="1" Grid.Row="0"
-				Watermark="Geben Sie hier eine Filter ein"
-				Text="{Binding Filter}"
-				HorizontalAlignment="Stretch" />
+            <TextBox Grid.Column="1" Grid.Row="0"
+                Watermark="Geben Sie hier eine Filter ein"
+                Text="{Binding Filter}"
+                HorizontalAlignment="Stretch" />
 
-			<!-- Button mit fester Breite -->
-			<Button	Grid.Column="2"	Grid.Row="0"
-				Background="Transparent"
-				Command="{Binding LoadModelsCommand}">
-				<StackPanel Orientation="Horizontal" Width="20" Height="20">
-					<Image Stretch="" Source="/Assets/reload.png"></Image>
-				</StackPanel>
-			</Button>
-		</Grid>
+            <!-- Button mit fester Breite -->
+            <Button    Grid.Column="2"    Grid.Row="0"
+                Background="Transparent"
+                Command="{Binding LoadModelsCommand}">
+                <StackPanel Orientation="Horizontal" Width="20" Height="20">
+                    <Image Stretch="" Source="/Assets/reload.png"></Image>
+                </StackPanel>
+            </Button>
+        </Grid>
 
-		<DataGrid Grid.Column="0" Grid.Row="1"
-			x:Name="dataGrid"
-			BorderThickness="1"
-			BorderBrush="Gray"
-			IsReadOnly="True"
-			ItemsSource="{Binding Models}"
-			SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-			AutoGenerateColumns="False">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Author" Binding="{Binding Author}" />
-				<DataGridTextColumn Header="Titel" Binding="{Binding Title}" />
-				<DataGridTemplateColumn Width="Auto" Header="Actions">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<StackPanel Orientation="Horizontal">
-								<Button
-									Background="Transparent"
-									Command="{Binding #dataGrid.((vm:BooksViewModel)DataContext).EditItemCommand}"
-									CommandParameter="{Binding}">
-									<StackPanel Orientation="Horizontal" Width="20" Height="20">
-										<Image Stretch="" Source="/Assets/edit.png"></Image>
-									</StackPanel>
-								</Button>
-								<Button
-									Background="Transparent"
-									Command="{Binding #dataGrid.((vm:BooksViewModel)DataContext).DeleteItemCommand}"
-									CommandParameter="{Binding}">
-									<StackPanel Orientation="Horizontal" Width="20" Height="20">
-										<Image Stretch="" Source="/Assets/delete.png"></Image>
-									</StackPanel>
-								</Button>
-							</StackPanel>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-			</DataGrid.Columns>
-		</DataGrid>
-	</Grid>
+        <DataGrid Grid.Column="0" Grid.Row="1"
+            x:Name="dataGrid"
+            BorderThickness="1"
+            BorderBrush="Gray"
+            IsReadOnly="True"
+            ItemsSource="{Binding Models}"
+            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+            AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Author" Binding="{Binding Author}" />
+                <DataGridTextColumn Header="Titel" Binding="{Binding Title}" />
+                <DataGridTemplateColumn Width="Auto" Header="Actions">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button
+                                    Background="Transparent"
+                                    Command="{Binding #dataGrid.((vm:BooksViewModel)DataContext).EditItemCommand}"
+                                    CommandParameter="{Binding}">
+                                    <StackPanel Orientation="Horizontal" Width="20" Height="20">
+                                        <Image Stretch="" Source="/Assets/edit.png"></Image>
+                                    </StackPanel>
+                                </Button>
+                                <Button
+                                    Background="Transparent"
+                                    Command="{Binding #dataGrid.((vm:BooksViewModel)DataContext).DeleteItemCommand}"
+                                    CommandParameter="{Binding}">
+                                    <StackPanel Orientation="Horizontal" Width="20" Height="20">
+                                        <Image Stretch="" Source="/Assets/delete.png"></Image>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 
 </UserControl>
 ```
@@ -851,12 +851,12 @@ Im nächsten Schritt fügen wir das `BooksUserControl` in das `MainWindow` ein. 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:SEBookStore.MVVMApp.ViewModels"
-		xmlns:views="using:SEBookStore.MVVMApp.Views"
+        xmlns:views="using:SEBookStore.MVVMApp.Views"
         mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
         x:Class="SEBookStore.MVVMApp.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-		Width="1000"
-		Height="600"
+        Width="1000"
+        Height="600"
         Icon="/Assets/avalonia-logo.ico"
         Title="BookStore">
 
@@ -864,11 +864,11 @@ Im nächsten Schritt fügen wir das `BooksUserControl` in das `MainWindow` ein. 
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<TabControl Margin="5">
-		<TabItem Header="Bücher">
-			<views:BooksUserControl />
-		</TabItem>
-	</TabControl>	
+    <TabControl Margin="5">
+        <TabItem Header="Bücher">
+            <views:BooksUserControl />
+        </TabItem>
+    </TabControl>    
 
 </Window>
 ```
@@ -884,53 +884,53 @@ Erstellung der Einzel-Ansicht mit einem `Grid`-Container  im Ordner `Views`:
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:vm="using:SEBookStore.MVVMApp.ViewModels"
+             xmlns:vm="using:SEBookStore.MVVMApp.ViewModels"
              mc:Ignorable="d" d:DesignWidth="460" d:DesignHeight="320"
              x:Class="SEBookStore.MVVMApp.Views.BookUserControl"
-	 		 x:DataType="vm:BookViewModel">
+              x:DataType="vm:BookViewModel">
 
-	<UserControl.DataContext>
-		<vm:BookViewModel />
-	</UserControl.DataContext>
+    <UserControl.DataContext>
+        <vm:BookViewModel />
+    </UserControl.DataContext>
 
-	<Grid Margin="20 10 20 10">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"></RowDefinition>
-			<RowDefinition Height="Auto"></RowDefinition>
-			<RowDefinition Height="Auto"></RowDefinition>
-			<RowDefinition Height="Auto"></RowDefinition>
-			<RowDefinition Height="Auto"></RowDefinition>
-			<RowDefinition Height="Auto"></RowDefinition>
-			<RowDefinition Height="Auto"></RowDefinition>
-		</Grid.RowDefinitions>
+    <Grid Margin="20 10 20 10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
 
-		<Label Grid.Row="0" Grid.Column="0" Content="ISBN:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ISBNNumber}" Margin="0 10 10 0"/>
+        <Label Grid.Row="0" Grid.Column="0" Content="ISBN:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ISBNNumber}" Margin="0 10 10 0"/>
 
-		<Label Grid.Row="1" Grid.Column="0" Content="Autor:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
-		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Author}" Margin="0 10 10 0"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Autor:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Author}" Margin="0 10 10 0"/>
 
-		<Label Grid.Row="2" Grid.Column="0" Content="Titel:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
-		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Title}" Margin="0 10 10 0"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="Titel:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Title}" Margin="0 10 10 0"/>
 
-		<Label Grid.Row="3" Grid.Column="0" Content="Beschreibung:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
-		<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Description}" Margin="0 10 10 0"/>
+        <Label Grid.Row="3" Grid.Column="0" Content="Beschreibung:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Description}" Margin="0 10 10 0"/>
 
-		<Label Grid.Row="4" Grid.Column="0" Content="Erscheinung:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
-		<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding YearOfRelease}" Margin="0 10 10 0"/>
+        <Label Grid.Row="4" Grid.Column="0" Content="Erscheinung:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding YearOfRelease}" Margin="0 10 10 0"/>
 
-		<Label Grid.Row="5" Grid.Column="0" Content="Preis:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
-		<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Price}" Margin="0 10 10 0"/>
+        <Label Grid.Row="5" Grid.Column="0" Content="Preis:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 10 10 0"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Price}" Margin="0 10 10 0"/>
 
-		<StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-			<Button Content="Abbrechen" Command="{Binding CancelCommand}" Width="120" HorizontalContentAlignment="Center" Margin="0 10 10 0"/>
-			<Button Content="Speichern" Command="{Binding SaveCommand}" Width="120" HorizontalContentAlignment="Center" Margin="0 10 10 0"/>
-		</StackPanel>
-	</Grid>
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Abbrechen" Command="{Binding CancelCommand}" Width="120" HorizontalContentAlignment="Center" Margin="0 10 10 0"/>
+            <Button Content="Speichern" Command="{Binding SaveCommand}" Width="120" HorizontalContentAlignment="Center" Margin="0 10 10 0"/>
+        </StackPanel>
+    </Grid>
 
 </UserControl>
 ```
@@ -946,24 +946,24 @@ Das `ItemUserControl` benötigt nun ein `Avalonia Window` damit dieses Element d
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:vm="using:SEBookStore.MVVMApp.ViewModels"
-		xmlns:views="using:SEBookStore.MVVMApp.Views"
+        xmlns:vm="using:SEBookStore.MVVMApp.ViewModels"
+        xmlns:views="using:SEBookStore.MVVMApp.Views"
         mc:Ignorable="d"
-		d:DesignWidth="800"
-		d:DesignHeight="350"
-		Width="800"
-		Height="350"
+        d:DesignWidth="800"
+        d:DesignHeight="350"
+        Width="800"
+        Height="350"
         x:Class="SEBookStore.MVVMApp.Views.BookWindow"
-		x:DataType="vm:BookViewModel"
-		WindowStartupLocation="CenterOwner"
+        x:DataType="vm:BookViewModel"
+        WindowStartupLocation="CenterOwner"
         Title="Buch">
 
-	<Window.DataContext>
-		<vm:BookViewModel/>
-	</Window.DataContext>
+    <Window.DataContext>
+        <vm:BookViewModel/>
+    </Window.DataContext>
 
-	<views:BookUserControl DataContext="{Binding}">
-	</views:BookUserControl>
+    <views:BookUserControl DataContext="{Binding}">
+    </views:BookUserControl>
 
 </Window>
 ```
