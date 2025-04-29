@@ -82,19 +82,19 @@ Für den ***SEBookStore*** sind folgende Regeln definiert:
 | Rule | Subject | Type   | Operation | Description | Note |
 |------|---------|--------|-----------|-------------|------|
 |**A1**| `Book`  |        |           |             |      |
-|      |         |**WENN**|           | eine `Book` erstellt oder bearbeitet wird, |  |
+|      |         |**WENN**|           | ein `Book` erstellt oder bearbeitet wird, |  |
 |      |         |**DANN**|           | muss die `ISBNNumber` festgelegt sein und gültig sein (die Regeln finden Sie im Abschnitt **Prüfung der ISBN-Nummern**). | |
 |**A2**| `Book`  |        |           |             |      |
-|      |         |**WENN**|           | eine `Book` erstellt oder bearbeitet wird, |  |
+|      |         |**WENN**|           | ein `Book` erstellt oder bearbeitet wird, |  |
 |      |         |**DANN**|           | muss der `Author` festgelegt sein und mindestens 3 Zeichen lang sein. | |
 |**A3**| `Book`  |        |           |             |      |
-|      |         |**WENN**|           | eine `Book` erstellt oder bearbeitet wird, |  |
+|      |         |**WENN**|           | ein `Book` erstellt oder bearbeitet wird, |  |
 |      |         |**DANN**|           | muss der `Title` festgelegt sein und mindestens 5 Zeichen lang sein. | |
 |**A4**| `Book`  |        |           |             |      |
-|      |         |**WENN**|           | eine `Book` erstellt oder bearbeitet wird, |  |
+|      |         |**WENN**|           | ein `Book` erstellt oder bearbeitet wird, |  |
 |      |         |**DANN**|           | muss die `YearOfRelease` festgelegt und im im Bereich von 1900 bis aktuelles Datum + 1 Jahr sein. | |
 |**A5**| `Book`  |        |           |             |      |
-|      |         |**WENN**|           | eine `Book` erstellt oder bearbeitet wird, |  |
+|      |         |**WENN**|           | ein `Book` erstellt oder bearbeitet wird, |  |
 |      |         |**DANN**|           | muss der `Price` festgelegt und im Bereich von 1 EUR bis 10.000 EUR sein. | |
 
 > **Hinweis:** Falls einer der Geschäftsregeln nicht erfüllt ist, muss eine **BusinessException** mit einer entsprechenden Fehlermeldung (in Englisch) geworfen werden.
