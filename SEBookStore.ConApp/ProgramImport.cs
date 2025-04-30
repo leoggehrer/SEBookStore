@@ -35,9 +35,10 @@ namespace SEBookStore.ConApp
                     YearOfRelease = int.Parse(parts[5])
                 });
 
+            using var context = CreateContext();
+
             foreach (var book in books)
             {
-                using var context = CreateContext();
 
                 try
                 {
@@ -52,6 +53,10 @@ namespace SEBookStore.ConApp
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error on line {index}: {ex.InnerException}");
+                }
+                finally
+                {
+                    context.RejectChanges();
                 }
             }
         }
