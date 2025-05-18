@@ -30,7 +30,7 @@ namespace SEBookStore.Common
                 MVVMAppExtension,
                 AngularExtension,
             ];
-            GenerationIgnoreFolders = ["node_module"];
+            GenerationIgnoreFolders = IgnoreSubFolders;
             AfterClassInitialize();
         }
         /// <summary>
@@ -117,31 +117,36 @@ namespace SEBookStore.Common
         public static string[] GenerationIgnoreFolders { get; private set; }
         /// Gets the label for generated code.
         /// @returns The label for generated code.
-        public static string GeneratedCodeLabel => "@GeneratedCode";
+        public static string GeneratedCodeLabel => "@" + "GeneratedCode";
         /// <summary>
         /// Gets the label for customized and generated code.
         /// </summary>
         /// <returns>The label for customized and generated code.</returns>
-        public static string CustomizedAndGeneratedCodeLabel => "@CustomAndGeneratedCode";
+        public static string CustomizedAndGeneratedCodeLabel => "@" + "CustomAndGeneratedCode";
         /// <summary>
         /// Represents the label to ignore.
         /// </summary>
-        public static string IgnoreLabel => "@Ignore";
+        public static string IgnoreLabel => "@" + "Ignore";
         /// <summary>
         /// Gets the label for the base code.
         /// </summary>
         /// <value>A string representing the label for base code.</value>
-        public static string BaseCodeLabel => "@BaseCode";
+        public static string BaseCodeLabel => "@" + "BaseCode";
         /// <summary>
         /// Gets a label for code copy.
         /// </summary>
         /// <value>A string representing the label for code copy.</value>
-        public static string CodeCopyLabel => "@CodeCopy";
+        public static string CodeCopyLabel => "@" + "CodeCopy";
         /// <summary>
         /// Gets the file extension for C# files.
         /// </summary>
         /// <returns>The file extension for C# files, which is '.cs'.</returns>
         public static string CSharpFileExtension => ".cs";
+        /// <summary>
+        /// Gets the file extension for typescript files.
+        /// </summary>
+        /// <returns>The file extension for C# files, which is '.cs'.</returns>
+        public static string TSFileExtension => ".ts";
         /// <summary>
         /// Gets the file extension for razor page files.
         /// </summary>
@@ -184,24 +189,41 @@ namespace SEBookStore.Common
             $"{Path.DirectorySeparatorChar}.angular{Path.DirectorySeparatorChar}",
             $"{Path.DirectorySeparatorChar}.vs",
             $"{Path.DirectorySeparatorChar}.vs{Path.DirectorySeparatorChar}",
-            $"{Path.DirectorySeparatorChar}.vscode",
-            $"{Path.DirectorySeparatorChar}.vscode{Path.DirectorySeparatorChar}",
+            //$"{Path.DirectorySeparatorChar}.vscode",
+            //$"{Path.DirectorySeparatorChar}.vscode{Path.DirectorySeparatorChar}",
             $"{Path.DirectorySeparatorChar}.git",
             $"{Path.DirectorySeparatorChar}.git{Path.DirectorySeparatorChar}",
             $"{Path.DirectorySeparatorChar}bin",
             $"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}",
             $"{Path.DirectorySeparatorChar}obj",
             $"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}",
+            $"{Path.DirectorySeparatorChar}node_modules",
             $"{Path.DirectorySeparatorChar}node_modules{Path.DirectorySeparatorChar}",
+            $"{Path.DirectorySeparatorChar}Migrations",
+            $"{Path.DirectorySeparatorChar}Migrations{Path.DirectorySeparatorChar}",
         ];
         /// <summary>
         /// Array of folder file paths to be ignored.
         /// </summary>
-        public static string[] IgnoreFolderFiles { get; } =
+        public static string[] IgnoreFolderNames { get; } =
+        [
+            $".angular",
+            $".vs",
+            $".vscode",
+            $".git",
+            $"bin",
+            $"obj",
+            $"node_modules",
+            $"Migrations",
+        ];
+        /// <summary>
+        /// Array of folder file paths to be ignored.
+        /// </summary>
+        public static string[] IgnoreSubFolders { get; } =
         [
             $"{Path.DirectorySeparatorChar}.angular{Path.DirectorySeparatorChar}",
             $"{Path.DirectorySeparatorChar}.vs{Path.DirectorySeparatorChar}",
-            $"{Path.DirectorySeparatorChar}.vscode{Path.DirectorySeparatorChar}",
+            //$"{Path.DirectorySeparatorChar}.vscode{Path.DirectorySeparatorChar}",
             $"{Path.DirectorySeparatorChar}.git{Path.DirectorySeparatorChar}",
             $"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}",
             $"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}",

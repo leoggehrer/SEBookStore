@@ -363,22 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 
 #SEBookStoreStart
-/Diagrams/Entities/Book.puml
-/SEBookStore.WebApi/Models/BookEdit.cs
-/SEBookStore.WebApi/Models/Book.cs
-/SEBookStore.MVVMApp/Models/Book.cs
-/SEBookStore.WebApi/Models/BookInheritance.cs
-/SEBookStore.Logic/Entities/BookGeneration.cs
-/SEBookStore.WebApi/Controllers/ContextAccessorGeneration.cs
-/SEBookStore.WebApi/Controllers/BooksController.cs
-/SEBookStore.Logic/DataContext/BookSet.cs
-/SEBookStore.MVVMApp/ViewModels/BookViewModel.cs
-/SEBookStore.MVVMApp/ViewModels/BooksViewModel.cs
-/SEBookStore.MVVMApp/Models/BookInheritance.cs
-/SEBookStore.Logic/DataContext/ProjectDbContextGeneration.cs
-/SEBookStore.Logic/Contracts/IContextGeneration.cs
-/SEBookStore.Logic/Contracts/IBookSet.cs
-/SEBookStore.Common/Contracts/IBook.cs
 #SEBookStoreEnd
 
 #SETemplateStart

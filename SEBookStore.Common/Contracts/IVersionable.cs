@@ -1,5 +1,4 @@
-﻿//@CodeCopy
-namespace SEBookStore.Common.Contracts
+﻿namespace SEBookStore.Common.Contracts
 {
     /// <summary>
     /// An interface representing versionable entities.

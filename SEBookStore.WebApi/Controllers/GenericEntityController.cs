@@ -1,11 +1,10 @@
 ﻿//@CodeCopy
-using SEBookStore.Logic.Contracts;
-using SEBookStore.WebApi.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SEBookStore.Logic.Contracts;
+using SEBookStore.WebApi.Contracts;
 using System.Linq.Dynamic.Core;
 using System.Linq.Dynamic.Core.Exceptions;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 namespace SEBookStore.WebApi.Controllers
 {
@@ -120,8 +119,6 @@ namespace SEBookStore.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public virtual async Task<ActionResult<IEnumerable<TModel>>> GetAsync()
         {
-            var authHeader = HttpContext.Request.Headers.Authorization;
-
             var query = await QuerySet.AsNoTracking().Take(MaxCount).ToArrayAsync();
             var result = query.Select(e => ToModel(e));
 

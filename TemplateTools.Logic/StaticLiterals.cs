@@ -29,6 +29,10 @@ namespace TemplateTools.Logic
         /// </summary>
         public static string CSharpFileExtension => CommonStaticLiterals.CSharpFileExtension;
         /// <summary>
+        /// Gets the file extension for typescript files.
+        /// </summary>
+        public static string TSFileExtension => CommonStaticLiterals.TSFileExtension;
+        /// <summary>
         /// Gets the file extension for razor page files.
         /// </summary>
         public static string RazorFileExtension => CommonStaticLiterals.RazorFileExtension;
@@ -139,23 +143,29 @@ namespace TemplateTools.Logic
         
         #region Model properties
         public static readonly string IdType = nameof(IdType);
+
         public static readonly string ModelObjectName = "ModelObject";
         public static readonly string VersionModelObjectName = "VersionModelObject";
         public static readonly string ViewModelObjectName = "ViewModelObject";
+
+        public static readonly string AngularModelObjectName = "IKeyModel";
+        public static readonly string AngularVersionModelObjectName = "IVersionModel";
+        public static readonly string AngularViewModelObjectName = "IViewModel";
         #endregion Model properties
 
-        public static readonly string[] ModelBaseClasses =
-        [
-            ModelObjectName,
-            VersionModelObjectName,
-        ];
-        public static readonly Dictionary<string, string> BaseClassMapping = new()
+        public static readonly Dictionary<string, string> ModelBaseClassMapping = new()
         {
             { EntityObjectName, ModelObjectName },
             { VersionEntityObjectName, VersionModelObjectName },
             { ViewObjectName, ViewModelObjectName },
         };
-        
+        public static readonly Dictionary<string, string> AngularBaseClassMapping = new()
+        {
+            { EntityObjectName, AngularModelObjectName },
+            { VersionEntityObjectName, AngularVersionModelObjectName },
+            { ViewObjectName, AngularViewModelObjectName },
+        };
+
         #region Folders and Files
         /// <summary>
         /// Gets the folder path where entities are stored.

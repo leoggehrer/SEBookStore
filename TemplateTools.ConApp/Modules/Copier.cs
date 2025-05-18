@@ -159,6 +159,8 @@ namespace TemplateTools.ConApp.Modules
             ,".cd"
             ,".razor"
             ,".razor.cs"
+            ,".html"
+            ,".ts"
         ];
         /// <summary>
         /// Gets or sets the list of extensions.
@@ -476,7 +478,7 @@ namespace TemplateTools.ConApp.Modules
             var sourceSolutionName = Path.GetFileNameWithoutExtension(sourceSolutionFilePath);
 
             foreach (var sourceFile in new DirectoryInfo(sourceSolutionPath).GetFiles("*", SearchOption.TopDirectoryOnly)
-                                                                                 .Where(f => SolutionExtenions.Any(e => e.Equals(f.Extension, StringComparison.CurrentCultureIgnoreCase))))
+                                                                            .Where(f => SolutionExtenions.Any(e => e.Equals(f.Extension, StringComparison.CurrentCultureIgnoreCase))))
             {
                 var targetFilePath = CreateTargetFilePath(sourceFile.FullName, sourceSolutionPath, targetSolutionPath);
 
@@ -499,9 +501,9 @@ namespace TemplateTools.ConApp.Modules
         private void CopySolutionProjectFiles(string sourceSolutionPath, string targetSolutionPath, IEnumerable<string> sourceProjects)
         {
             var projectFilePath = string.Empty;
-            var targetSolutionFolder = new DirectoryInfo(targetSolutionPath).Name;
-            var sourceSolutionFilePath = TemplatePath.GetSolutionFilePath(sourceSolutionPath);
             var sourceSolutionName = TemplatePath.GetSolutionName(sourceSolutionPath);
+            var sourceSolutionFilePath = TemplatePath.GetSolutionFilePath(sourceSolutionPath);
+            var targetSolutionFolder = new DirectoryInfo(targetSolutionPath).Name;
 
             foreach (var sourceFile in new DirectoryInfo(sourceSolutionPath).GetFiles($"*{CommonStaticLiterals.ProjectFileExtension}", SearchOption.AllDirectories))
             {
@@ -532,8 +534,8 @@ namespace TemplateTools.ConApp.Modules
             var sourceSolutionName = TemplatePath.GetSolutionName(sourceSolutionDirectory);
             var targetSolutionFolder = new DirectoryInfo(targetSolutionDirectory).Name;
             var sourceFiles = new DirectoryInfo(sourceDirectory).GetFiles("*", SearchOption.AllDirectories)
-                                                                .Where(f => CommonStaticLiterals.IgnoreFolderFiles.Any(i => f.FullName.Contains(i, StringComparison.CurrentCultureIgnoreCase)) == false
-            && (f.Name.Equals("dockerfile", StringComparison.CurrentCultureIgnoreCase) || ProjectExtensions.Any(i => i.Equals(Path.GetExtension(f.Name)))));
+                                                                .Where(f => CommonStaticLiterals.IgnoreSubFolders.Any(i => f.FullName.Contains(i, StringComparison.CurrentCultureIgnoreCase)) == false
+                                                                         && (f.Name.Equals("dockerfile", StringComparison.CurrentCultureIgnoreCase) || ProjectExtensions.Any(i => i.Equals(Path.GetExtension(f.Name)))));
 
             foreach (var sourceFile in sourceFiles)
             {
@@ -597,9 +599,10 @@ namespace TemplateTools.ConApp.Modules
                     }
                 }
 
-                if (sourceLines.Length != 0
-                && sourceLines.First().Contains(CommonStaticLiterals.IgnoreLabel) == false
-                && sourceLines.First().Contains(CommonStaticLiterals.GeneratedCodeLabel) == false)
+                if (sourceLines.Length == 0
+                    || (sourceLines.Length != 0
+                        && sourceLines.First().Contains(CommonStaticLiterals.IgnoreLabel) == false
+                        && sourceLines.First().Contains(CommonStaticLiterals.GeneratedCodeLabel) == false))
                 {
                     foreach (var sourceLine in sourceLines)
                     {
