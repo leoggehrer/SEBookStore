@@ -424,7 +424,7 @@ namespace SEBookStore.Logic.Entities
 
 **Erstellungsrichtlinien:**
 
-- Erstellen Sie sie Entität-`Book` als `public partial class Book`-Klasse.
+- Erstellen Sie die Entität-`Book` als `public partial class Book`-Klasse.
 - Leiten Sie die Entität-`Book` von `EntityObject` oder `VersionEntityObject` ab.
 - Geben Sie den Tabellenname als Klassen-Attribut `[Table("...")]` über der Klasse an.
 - Erstellen Sie alle Eigenschaften und deren Einschränkungen `[MaxLength(10)]`.
@@ -591,13 +591,13 @@ Exclude generated files from GIT: True
 Choose [n|n,n|a...all|x|X]:
 ```
 
-Bevor Sie mit der `CodeGenerierung` beginnen, können einige Einstellungen vorgenommen werden. Sie finden die Beschreibung in der Dokumentation für [**SE-Template**](https://github.com/leoggehrer/SETemplate).
+Bevor Sie mit der `CodeGenerierung` beginnen, können einige Einstellungen vorgenommen werden. Sie finden die Beschreibung in der Dokumentation für [Menü: CodeGenerator](https://github.com/leoggehrer/SETemplate?tab=readme-ov-file#men%C3%BC-codegenerator).
 
 Nachdem die Einstellung vorgenommen wurde, wählen Sie die **Menü-option:** 9 - `Start` aus. Die `CodeGenerierung` startet und hat folgende Code-Teile generiert:
 
 | Module  | Ordner        | Komponente         | Dateiname                     | Beschreibung                                   |
 |---------|---------------|--------------------|-------------------------------|------------------------------------------------|
-| Common  | Contracts     | `IBook`            | Book.cs                       | Die Schnittstelle für das Entity-`Book` mit `CopyProperties(...)`. |
+| Common  | Contracts     | `IBook`            | IBook.cs                      | Die Schnittstelle für das Entity-`Book` mit `CopyProperties(...)`. |
 | Logic   | Entities      | `Book`             | BookGeneration.cs             | Die Schnittstelle wird mit dem Entity-`Book` verbunden. |
 | Logic   | DataContext   | `BookSet`          | BookSet.cs                    | Die `Set`-Management Klasse für den Zugriff. |
 | Logic   | Contracts     | `IBookSet`         | IBookSet.cs                   | Die Schnittstelle für die `BookSet`-Klasse. |
@@ -619,7 +619,7 @@ Nachdem die Einstellung vorgenommen wurde, wählen Sie die **Menü-option:** 9 -
 
 **Erweiterungsrichtlinien:**
 
-- Wenn eine Klasse Members erweitert wird, dann erfolgt dies in einer `partial class Name`.
+- Wenn eine Klasse erweitert wird, dann erfolgt dies in einer `partial class Name`.
 - Zusätzlich muss die Code-Generierung geprüft werden und mit der Konstanten `GENERATEDCODE_ON` eingeschaltet werden.
 - Der folgende Programmausschnitt zeigt eine mögliche Erweiterung:
 
