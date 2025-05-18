@@ -640,7 +640,7 @@ namespace SEBookStore.MVVMApp.Models
 
 ### Erweiterung: Datenimport
 
-Für den Datenimport erweitern wir im Modul `SEBookStore.ConApp` die Klasse `Program`. Zu diesem Zweck wird eine partiele Klasse mit dem Dateinamen 'ProgramImport.cs' erstellt. In dieser Klasse erfolgt das Eomnlesen der csv-Daten und die Auswertung des Importes:
+Für den Datenimport erweitern wir im Modul `SEBookStore.ConApp` die Klasse `Program`. Zu diesem Zweck wird eine partiele Klasse mit dem Dateinamen 'ProgramImport.cs' erstellt. In dieser Klasse erfolgt das Einlesen der csv-Daten und die Auswertung des Importes:
 
 ```csharp
 #if GENERATEDCODE_ON
