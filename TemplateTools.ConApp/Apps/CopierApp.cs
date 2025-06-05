@@ -136,8 +136,36 @@ namespace TemplateTools.ConApp.Apps
         /// <param name="args">The command-line arguments passed to the application.</param>
         protected override void BeforeRun(string[] args)
         {
-            TargetSolutionName = "TargetSolution";
-            base.BeforeRun(args);
+            var convertedArgs = ConvertArgs(args);
+            var appArgs = new List<string>();
+
+            foreach (var arg in convertedArgs)
+            {
+                if (arg.Key.Equals(nameof(TargetSolutionName), StringComparison.OrdinalIgnoreCase))
+                {
+                    TargetSolutionName = arg.Value;
+                }
+                else if (arg.Key.Equals(nameof(SourceSolutionPath), StringComparison.OrdinalIgnoreCase))
+                {
+                    SourceSolutionPath = arg.Value;
+                }
+                else if (arg.Key.Equals(nameof(TargetSolutionSubPath), StringComparison.OrdinalIgnoreCase))
+                {
+                    TargetSolutionSubPath = arg.Value;
+                }
+                else if (arg.Key.Equals("AppArg", StringComparison.OrdinalIgnoreCase))
+                {
+                    foreach (var item in arg.Value.ToLower().Split(','))
+                    {
+                        CommandQueue.Enqueue(item);
+                    }
+                }
+                else
+                {
+                    appArgs.Add($"{arg.Key}={arg.Value}");
+                }
+            }
+            base.BeforeRun([.. appArgs]);
         }
         #endregion overrides
 

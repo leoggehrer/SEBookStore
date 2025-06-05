@@ -59,7 +59,7 @@ namespace SEBookStore.ConApp
             {
                 Task.Run(async () =>
                 {
-                    var login = await Logic.AccountAccess.LogonAsync(AaEmail, AaPwd, string.Empty);
+                    var login = await Logic.AccountAccess.LoginAsync(AAEmail, AAPwd, string.Empty);
 
                     result = Logic.DataContext.Factory.CreateContext(login.SessionToken);
                     return result;
